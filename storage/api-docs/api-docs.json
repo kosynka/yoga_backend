@@ -1,0 +1,39 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "My First API Documentation",
+        "contact": {
+            "url": "http://t.me/kosynka"
+        },
+        "version": "0.1"
+    },
+    "servers": [
+        {
+            "url": "https://127.0.0.1:8000/",
+            "description": "Local env"
+        }
+    ],
+    "paths": {
+        "/api/users": {
+            "get": {
+                "operationId": "6579f43444576128085666309bb5b5e6",
+                "responses": {
+                    "200": {
+                        "description": "An example endpoint"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "UserController": {
+                "title": "UserController",
+                "description": "UserController",
+                "xml": {
+                    "name": "UserController"
+                }
+            }
+        }
+    }
+}

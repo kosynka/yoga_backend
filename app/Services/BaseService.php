@@ -49,9 +49,14 @@ class BaseService
         return $this->result(['message' => $message]);
     }
 
+    private function writeLog(array $data, array $context = []): void
+    {
+        Log::info(__METHOD__ . ' ' . get_class($this) . __FUNCTION__ . ' ' . $data, $context);
+    }
+
     protected function result(array $data): array
     {
-        Log::info(__METHOD__ . ' ' . $this->getInfoContext($data));
+        $this->writeLog($this->getInfoContext($data));
 
         $returningData = ['success' => true] + $data;
 
@@ -63,7 +68,7 @@ class BaseService
 
     protected function error(int $code, string $message): array
     {
-        Log::info(__METHOD__ . ' ' . $message);
+        $this->writeLog($this->getInfoContext($message));
 
         return [
             'data' => [
@@ -76,7 +81,7 @@ class BaseService
 
     protected function response(int $code, array $data): array
     {
-        Log::info(__METHOD__ . ' code:' . $code, $data);
+        $this->writeLog($this->getInfoContext($code, $data));
 
         return [
             'data' => $data,

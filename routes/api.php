@@ -1,9 +1,15 @@
 <?php
 
+use App\Http\Controllers\Api\v1\AssignmentController;
+use App\Http\Controllers\Api\v1\DictionaryController;
+use App\Http\Controllers\Api\v1\AffiliateController;
+use App\Http\Controllers\Api\v1\SupportController;
+use App\Http\Controllers\Api\v1\LessonController;
+use App\Http\Controllers\Api\v1\TypeController;
 use App\Http\Controllers\Api\v1\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('v1')->group(function () {
+Route::prefix('v1')->middleware('log')->group(function () {
     Route::get('cities', [DictionaryController::class, 'cities']);
 
     Route::post('/feedback', [SupportController::class, 'send']);

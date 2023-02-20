@@ -25,13 +25,11 @@ class User extends Authenticatable //implements MustVerifyEmail
         'role',
         'name',
         'phone',
-        // 'email',
         'photo_id',
         'favorite_affiliate_id',
         'works_in_affiliate_id',
         'password',
         'fb_token',
-        // 'email_verified_at',
         'phone_verified_at',
         'created_at',
     ];
@@ -52,14 +50,19 @@ class User extends Authenticatable //implements MustVerifyEmail
         return $this->belongsTo(Affiliate::class);
     }
 
+    public function assignments(): HasMany              // for users
+    {
+        return $this->hasMany(Assignment::class);
+    }
+
     public function worksInAffiliate(): BelongsTo       // for instructors
     {
         return $this->belongsTo(Affiliate::class);
     }
 
-    public function assignments(): HasMany              // for users
+    public function lessons(): HasMany                  // for instructors
     {
-        return $this->hasMany(Assignment::class);
+        return $this->hasMany(Lesson::class, 'instructor_id');
     }
 
     public function getRole(): string

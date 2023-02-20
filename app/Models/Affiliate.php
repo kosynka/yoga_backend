@@ -16,7 +16,7 @@ class Affiliate extends Model
         'name',
         'description',
         'address',
-        'photo_id',
+        'image_id',
         'city_id',
         'master_id',
         // 'parent_id',
@@ -28,7 +28,7 @@ class Affiliate extends Model
         'deleted_at',
     ];
 
-    public function photo(): BelongsTo
+    public function image(): BelongsTo
     {
         return $this->belongsTo(File::class);
     }

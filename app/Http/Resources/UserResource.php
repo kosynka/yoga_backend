@@ -16,10 +16,21 @@ class UserResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'role' => $this->role,
             'name' => $this->name,
-            'email' => $this->email,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'phone' => $this->phone,
+            'photo' => (new FileResource($this->whenLoaded('photo'))),
+
+            'favorite_affiliate' => (new AffiliateResource($this->whenLoaded('favoriteAffiliate'))),    // for users
+            'assignments' => AssignmentResource::collection($this->whenLoaded('assignments')),          // for users
+
+            'works_in_affiliate' => (new AffiliateResource($this->whenLoaded('worksInAffiliate'))),     // for instructors
+            'lessons' => (new LessonResource($this->whenLoaded('lessons'))),                            // for instructors
+
+            'fb_token' => $this->whenNotNull($this->fb_token),
+            'phone_verified_at' => $this->phone_verified_at,
+            'created_at' => $this->whenNotNull($this->created_at),
+            'updated_at' => $this->whenNotNull($this->updated_at),
         ];
     }
 }

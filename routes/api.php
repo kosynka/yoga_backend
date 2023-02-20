@@ -4,30 +4,57 @@ use App\Http\Controllers\Api\v1\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function () {
-    Route::post('/register', [AuthController::class, 'register']);
-    Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+    Route::get('cities', [DictionaryController::class, 'cities']);
+
     Route::post('/feedback', [SupportController::class, 'send']);
 
-    Route::prefix('verification')->group(function () {
-        Route::post('/sendverify', [UserController::class, 'sendOtp']);
-        Route::post('/verify', [UserController::class, 'verifyOtp']);
+    Route::controller(AuthController::class)->group(function () {
+        Route::post('/login', 'login');
+        Route::post('/register', 'register');
+        Route::post('/logout', 'logout')->middleware('auth:sanctum');
+        Route::post('/forgot-password', 'sendForgot');
+        Route::post('/reset-password', 'reset');
     });
 
+    Route::prefix('verification')->controller(UserController::class)->group(function () {
+        Route::post('/sendverify', 'sendOtp');
+        Route::post('/verify', 'verifyOtp');
+    });
 
-    Route::post('/forgot-password', [AuthController::class, 'sendForgot']);
-    Route::post('/reset-password', [AuthController::class, 'reset']);
+    Route::group(['middleware' => ['auth:api-user', 'phoneverified']], function() {
+        Route::group(['prefix' => 'users', 'controller' => UserController::class], function () {
+            Route::get('/{id}', 'show');
+            Route::put('/{id}', 'update');
+            Route::post('/update-token', 'updateToken');
+            Route::delete('/{id}', 'delete');
+        });
 
-    Route::resource('user', PhotoController::class)->only([
-        'show'
-    ]);
+        Route::group(['prefix' => 'affiliates', 'controller' => AffiliateController::class], function () {
+            Route::get('/', 'index');
+            Route::get('/{id}', 'show');
+        });
 
-    Route::group(['prefix' => 'user', 'middleware' => ['auth:api-user', 'phoneverified']], function () {
-        Route::get('/{id}', [UserController::class, 'show']);
-        Route::put('/{id}', [UserController::class, 'update']);
-        Route::delete('/{id}', [UserController::class, 'delete']);
-        Route::post('/update-token', [UserController::class, 'updateToken']);
+        Route::group(['prefix' => 'types', 'controller' => TypeController::class], function () {
+            Route::get('/', 'index');
+            Route::get('/{id}', 'show');
+            Route::put('/{id}', 'update');
+            Route::delete('/{id}', 'delete');
+        });
 
-        Route::get('/purchases', [PurchaseController::class, 'index']);
+        Route::group(['prefix' => 'assignments', 'controller' => AssignmentController::class], function () {
+            Route::get('/', 'index');
+            Route::post('/', 'create');
+            Route::get('/{id}', 'show');
+            Route::put('/{id}', 'update');
+            Route::delete('/{id}', 'delete');
+        });
+
+        Route::group(['prefix' => 'lessons', 'controller' => LessonController::class], function () {
+            Route::get('/', 'index');
+            Route::post('/', 'create');
+            Route::get('/{id}', 'show');
+            Route::put('/{id}', 'update');
+            Route::delete('/{id}', 'delete');
+        });
     });
 });

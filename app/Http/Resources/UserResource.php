@@ -25,7 +25,7 @@ class UserResource extends JsonResource
             'assignments' => AssignmentResource::collection($this->whenLoaded('assignments')),          // for users
 
             'works_in_affiliate' => (new AffiliateResource($this->whenLoaded('worksInAffiliate'))),     // for instructors
-            'lessons' => (new LessonResource($this->whenLoaded('lessons'))),                            // for instructors
+            'lessons' => LessonResource::collection($this->whenLoaded('lessons')),                      // for instructors
 
             'fb_token' => $this->whenNotNull($this->fb_token),
             'phone_verified_at' => $this->phone_verified_at,

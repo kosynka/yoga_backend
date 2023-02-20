@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 
 /**
@@ -15,7 +14,7 @@ use Illuminate\Http\Request;
  *     )
  * )
  */
-class UserController extends Controller
+class UserController extends ApiController
 {
     /**
      * @OA\Get(

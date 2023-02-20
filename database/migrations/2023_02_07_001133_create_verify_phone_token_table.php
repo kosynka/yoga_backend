@@ -14,8 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('verify_phone_token', function (Blueprint $table) {
-            $table->string('phone')->index();
-            $table->string('token');
+            $table->id();
+
+            $table->string('phone');
+            $table->string('code');
 
             $table->timestamps();
         });

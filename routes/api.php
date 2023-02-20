@@ -23,7 +23,7 @@ Route::prefix('v1')->middleware('log')->group(function () {
         Route::post('/logout', 'logout')->middleware('auth:sanctum');
     });
 
-    Route::group(['middleware' => ['auth:api-user', 'phoneverified']], function() {
+    Route::group(['middleware' => ['auth:api-user', 'phone.verified']], function() {
         Route::group(['prefix' => 'users', 'controller' => UserController::class], function () {
             Route::get('/{id}', 'show');
             Route::put('/{id}', 'update');

@@ -14,7 +14,7 @@ class SmsService
         $this->config = $config;
     }
 
-    public function send(string $phone, array $data): void
+    public function send(string $phone): void
     {
         $code = rand(100000, 999999);
 
@@ -26,6 +26,9 @@ class SmsService
 
         Log::info(__METHOD__ . '. Верификация phone:' . $this->preparedId($phone) . '; код:' . $code . ' result:' . $result);
     }
+
+    public function check(string $phone, $code)
+    {}
 
     private function preparedPhone(string $phone): string
     {

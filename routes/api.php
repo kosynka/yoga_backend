@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\v1\AssignmentController;
 use App\Http\Controllers\Api\v1\DictionaryController;
 use App\Http\Controllers\Api\v1\AffiliateController;
+use App\Http\Controllers\Api\v1\AuthController;
 use App\Http\Controllers\Api\v1\SupportController;
 use App\Http\Controllers\Api\v1\LessonController;
 use App\Http\Controllers\Api\v1\TypeController;
@@ -17,14 +18,9 @@ Route::prefix('v1')->middleware('log')->group(function () {
     Route::controller(AuthController::class)->group(function () {
         Route::post('/login', 'login');
         Route::post('/register', 'register');
-        Route::post('/logout', 'logout')->middleware('auth:sanctum');
-        Route::post('/forgot-password', 'sendForgot');
-        Route::post('/reset-password', 'reset');
-    });
-
-    Route::prefix('verification')->controller(UserController::class)->group(function () {
         Route::post('/sendverify', 'sendOtp');
         Route::post('/verify', 'verifyOtp');
+        Route::post('/logout', 'logout')->middleware('auth:sanctum');
     });
 
     Route::group(['middleware' => ['auth:api-user', 'phoneverified']], function() {

@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 /**
  * @OA\Schema(
  *     title="UserController",
- *     description="UserController",
+ *     description="UserController APIs",
  *     @OA\Xml(
  *         name="UserController"
  *     )
@@ -19,8 +19,20 @@ class UserController extends Controller
 {
     /**
      * @OA\Get(
-     *     path="/api/users",
-     *     @OA\Response(response="200", description="An example endpoint")
+     *     tags={"user"},
+     *     summary="Index user",
+     *     description="Авторизация не требуется",
+     *     operationId="createUser",
+     *     @OA\RequestBody(
+     *         required=false,
+     *         description="Created user object",
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(ref="#")
+     *         )
+     *     ),
+     *     path="/api/v1/user/",
+     *     @OA\Response(response="200", description="Список верифицированных пользователей")
      * )
      */
     public function index()
@@ -29,9 +41,10 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @OA\Post(
+     *     path="/api/v1/user/register",
+     *     @OA\Response(response="200", description="Создать нового пользователя")
+     * )
      */
     public function create()
     {
@@ -39,57 +52,34 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @OA\Get(
+     *     path="/api/v1/user/{id}",
+     *     @OA\Response(response="200", description="Показать пользователя по id")
+     * )
      */
-    public function store(Request $request)
+    public function show(int $id)
     {
         //
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
+     * @OA\Put(
+     *     path="/api/v1/user/{id}",
+     *     @OA\Response(response="200", description="Изменить данные пользователя по id")
+     * )
      */
-    public function show(User $user)
+    public function update(int $id, Request $request)
     {
         //
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
+     * @OA\Delete(
+     *     path="/api/v1/user/{id}",
+     *     @OA\Response(response="200", description="Удалить пользователя по id")
+     * )
      */
-    public function edit(User $user)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, User $user)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
+    public function delete(int $id)
     {
         //
     }

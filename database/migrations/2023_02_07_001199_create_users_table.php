@@ -17,9 +17,11 @@ return new class extends Migration
             $table->id();
 
             $table->enum('role', [
-                'USER',
                 'ADMIN',
+                'USER',
+                'INSTRUCTOR',
             ]);
+
             $table->string('name');
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
@@ -27,10 +29,19 @@ return new class extends Migration
             $table->foreignId('photo_id')
                 ->nullable()
                 ->constrained('files')
-                ->cascadeOnDelete()
                 ->cascadeOnUpdate();
 
-            $table->string('password');
+            $table->foreignId('favorite_affiliate_id')
+                ->nullable()
+                ->constrained('affiliates')
+                ->cascadeOnUpdate();
+
+            $table->foreignId('works_in_affiliate_id')
+                ->nullable()
+                ->constrained('affiliates')
+                ->cascadeOnUpdate();
+
+            $table->string('password')->nullable();
 
             $table->string('fb_token')->nullable();
             $table->timestamp('email_verified_at')->nullable();

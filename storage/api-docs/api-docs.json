@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "My First API Documentation",
+        "title": "Yoga API documentation",
         "contact": {
             "url": "http://t.me/kosynka"
         },
@@ -10,16 +10,68 @@
     "servers": [
         {
             "url": "https://127.0.0.1:8000/",
-            "description": "Local env"
+            "description": "Local API Server"
         }
     ],
     "paths": {
-        "/api/users": {
+        "/api/v1/user/": {
             "get": {
-                "operationId": "6579f43444576128085666309bb5b5e6",
+                "tags": [
+                    "user"
+                ],
+                "summary": "Create user",
+                "description": "This can only be done by the logged in user.",
+                "operationId": "createUser",
+                "requestBody": {
+                    "description": "Created user object",
+                    "required": false,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
-                        "description": "An example endpoint"
+                        "description": "Список ввсех пользователей"
+                    }
+                }
+            }
+        },
+        "/api/v1/user/register": {
+            "post": {
+                "operationId": "f9baa163be911016656b372eb42f2940",
+                "responses": {
+                    "200": {
+                        "description": "Создать нового пользователя"
+                    }
+                }
+            }
+        },
+        "/api/v1/user/{id}": {
+            "get": {
+                "operationId": "cdb5c3a964506aedf8392745e825f90e",
+                "responses": {
+                    "200": {
+                        "description": "Показать пользователя по id"
+                    }
+                }
+            },
+            "put": {
+                "operationId": "e808de23b7fb1c74014d22da667c9966",
+                "responses": {
+                    "200": {
+                        "description": "Изменить данные пользователя по id"
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "70649bef575dd794cf31ddeff8b209e1",
+                "responses": {
+                    "200": {
+                        "description": "Удалить пользователя по id"
                     }
                 }
             }
@@ -29,7 +81,7 @@
         "schemas": {
             "UserController": {
                 "title": "UserController",
-                "description": "UserController",
+                "description": "UserController APIs",
                 "xml": {
                     "name": "UserController"
                 }

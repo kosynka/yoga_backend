@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\UserRequest;
+use App\Http\Requests\AffiliateRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class UserCrudController
+ * Class AffiliateCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class UserCrudController extends CrudController
+class AffiliateCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -26,9 +26,9 @@ class UserCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\User::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/user');
-        CRUD::setEntityNameStrings('Пользователя', 'Пользователи');
+        CRUD::setModel(\App\Models\Affiliate::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/affiliate');
+        CRUD::setEntityNameStrings('Филиал', 'Филиалы');
     }
 
     /**
@@ -43,20 +43,18 @@ class UserCrudController extends CrudController
         $this->crud->orderBy('id');
 
         CRUD::column('id');
-        CRUD::column('role')->label('Роль')->type('enum')->options(
-            [
-                'ADMIN' => 'Админ',
-                'INSTRUCTOR' => 'Инструктор',
-                'USER' => 'Пользователь',
-            ]
-        );
-        CRUD::column('name')->label('Имя');
-        CRUD::column('phone')->label('Телефон');
-        CRUD::column('photo')->label('Фото')->type('image')->prefix('storage/')->height('60px')->width('60px');
-        CRUD::column('favoriteAffiliate')->label('Любимый филиал');
-        CRUD::column('assignments')->label('Записи');
-        CRUD::column('worksInAffiliate')->label('Работат в филиале');
-        CRUD::column('lessons')->label('Созданные уроки');
+        CRUD::column('name')->label('Название');
+        CRUD::column('description')->label('Описание');
+        CRUD::column('address')->label('Адрес');
+        CRUD::column('image')->label('Фото');
+        CRUD::column('city')->label('Город');
+        CRUD::column('master')->label('Администратор');
+
+        /**
+         * Columns can be defined using the fluent syntax or array syntax:
+         * - CRUD::column('price')->type('number');
+         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
+         */
     }
 
     /**
@@ -67,17 +65,20 @@ class UserCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(UserRequest::class);
+        CRUD::setValidation(AffiliateRequest::class);
 
-        CRUD::field('role')->label('Роль')->type('enum')->options(
-            [
-                'ADMIN' => 'Админ',
-                'INSTRUCTOR' => 'Инструктор',
-                'USER' => 'Пользователь',
-            ]
-        );
-        CRUD::field('name')->label('Имя');
-        CRUD::field('phone')->label('Телефон');
+        CRUD::field('name');
+        CRUD::field('description');
+        CRUD::field('address');
+        CRUD::field('image');
+        CRUD::field('city');
+        CRUD::field('master');
+
+        /**
+         * Fields can be defined using the fluent syntax or array syntax:
+         * - CRUD::field('price')->type('number');
+         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
+         */
     }
 
     /**

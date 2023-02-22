@@ -28,7 +28,9 @@ class SmsService
     }
 
     public function check(string $phone, $code)
-    {}
+    {
+        //
+    }
 
     private function preparedPhone(string $phone): string
     {

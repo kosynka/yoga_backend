@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\Phone;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserRequest extends FormRequest
+class FileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,9 +25,7 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'role' => ['required', 'string'],
-            'name' => ['required', 'string'],
-            'phone' => ['required', new Phone],
+            // 'name' => 'required|min:5|max:255'
         ];
     }
 

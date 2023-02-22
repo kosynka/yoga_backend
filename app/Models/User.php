@@ -28,13 +28,13 @@ class User extends Authenticatable //implements MustVerifyEmail
         'photo_id',
         'favorite_affiliate_id',
         'works_in_affiliate_id',
-        'password',
-        'fb_token',
-        'phone_verified_at',
         'created_at',
     ];
-
+    
     protected $hidden = [
+        'password',
+        'phone_verified_at',
+        'fb_token',
         'updated_at',
         'deleted_at',
         'remember_token',

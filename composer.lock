@@ -6433,20 +6433,21 @@
     "packages-dev": [
         {
             "name": "backpack/generators",
-            "version": "v3.3.13",
+            "version": "3.3.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Laravel-Backpack/Generators.git",
-                "reference": "16f5f2d77703d2c3a119db59746cac2be69a8861"
+                "reference": "c5543d2b1f12ec831eb70683b74dd8e8a9d2331b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Laravel-Backpack/Generators/zipball/16f5f2d77703d2c3a119db59746cac2be69a8861",
-                "reference": "16f5f2d77703d2c3a119db59746cac2be69a8861",
+                "url": "https://api.github.com/repos/Laravel-Backpack/Generators/zipball/c5543d2b1f12ec831eb70683b74dd8e8a9d2331b",
+                "reference": "c5543d2b1f12ec831eb70683b74dd8e8a9d2331b",
                 "shasum": ""
             },
             "require": {
-                "backpack/crud": "^5.3.11"
+                "backpack/crud": "^5.3.11",
+                "php": "^7.4|^8.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^9.0||^7.0",
@@ -6497,9 +6498,9 @@
             ],
             "support": {
                 "issues": "https://github.com/Laravel-Backpack/Generators/issues",
-                "source": "https://github.com/Laravel-Backpack/Generators/tree/v3.3.13"
+                "source": "https://github.com/Laravel-Backpack/Generators/tree/3.3.14"
             },
-            "time": "2023-01-24T09:49:38+00:00"
+            "time": "2023-02-16T13:31:13+00:00"
         },
         {
             "name": "doctrine/instantiator",

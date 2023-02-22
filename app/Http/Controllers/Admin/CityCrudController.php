@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\UserRequest;
+use App\Http\Requests\CityRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class UserCrudController
+ * Class CityCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class UserCrudController extends CrudController
+class CityCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -26,9 +26,9 @@ class UserCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\User::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/user');
-        CRUD::setEntityNameStrings('Пользователя', 'Пользователи');
+        CRUD::setModel(\App\Models\City::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/city');
+        CRUD::setEntityNameStrings('Город', 'Города');
     }
 
     /**
@@ -43,20 +43,7 @@ class UserCrudController extends CrudController
         $this->crud->orderBy('id');
 
         CRUD::column('id');
-        CRUD::column('role')->label('Роль')->type('enum')->options(
-            [
-                'ADMIN' => 'Админ',
-                'INSTRUCTOR' => 'Инструктор',
-                'USER' => 'Пользователь',
-            ]
-        );
-        CRUD::column('name')->label('Имя');
-        CRUD::column('phone')->label('Телефон');
-        CRUD::column('photo')->label('Фото')->type('image')->prefix('storage/')->height('60px')->width('60px');
-        CRUD::column('favoriteAffiliate')->label('Любимый филиал');
-        CRUD::column('assignments')->label('Записи');
-        CRUD::column('worksInAffiliate')->label('Работат в филиале');
-        CRUD::column('lessons')->label('Созданные уроки');
+        CRUD::column('name')->label('Название');
     }
 
     /**
@@ -67,17 +54,9 @@ class UserCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(UserRequest::class);
+        CRUD::setValidation(CityRequest::class);
 
-        CRUD::field('role')->label('Роль')->type('enum')->options(
-            [
-                'ADMIN' => 'Админ',
-                'INSTRUCTOR' => 'Инструктор',
-                'USER' => 'Пользователь',
-            ]
-        );
-        CRUD::field('name')->label('Имя');
-        CRUD::field('phone')->label('Телефон');
+        CRUD::field('name')->label('Название');
     }
 
     /**

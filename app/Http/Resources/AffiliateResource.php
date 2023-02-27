@@ -19,9 +19,9 @@ class AffiliateResource extends JsonResource
             'name' => $this->name,
             'description' => $this->whenNotNull($this->description),
             'address' => $this->address,
-            'image' => (new FileResource($this->whenLoaded('image'))),
-            'city' => (new CityResource($this->whenLoaded('city'))),
-            'master' => (new UserResource($this->whenLoaded('master'))),
+            'image' => (new FileResource($this->image)),
+            'city' => (new CityResource($this->city)),
+            'master' => (new UserResource($this->master)),
         ];
     }
 }

@@ -42,7 +42,7 @@ class User extends Authenticatable //implements MustVerifyEmail
 
     public function photo(): BelongsTo
     {
-        return $this->belongsTo(File::class);
+        return $this->belongsTo(File::class, 'photo_id');
     }
 
     public function favoriteAffiliate(): BelongsTo      // for users

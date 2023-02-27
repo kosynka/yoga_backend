@@ -8,8 +8,6 @@ use Illuminate\Support\Facades\Log;
 
 class BaseService
 {    
-    protected $model;
-
     protected $user;
 
     /**
@@ -17,9 +15,9 @@ class BaseService
      *
      * @param Model $model
      */     
-    public function __construct(Model $model)
+    public function __construct()
     {         
-        $this->model = $model;
+        $this->user = auth('api-user')->user();
     }
 
     protected function defineUser()

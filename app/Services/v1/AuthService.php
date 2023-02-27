@@ -23,7 +23,7 @@ class AuthService extends BaseService implements AuthServiceInterface
         $user = $this->repository->findByPhone($phone);
 
         if (!isset($user)) {
-            return $this->error(401, 'Данный номер телефона не зарегестрирован');
+            $this->storeNewUser($phone);
         }
 
         SmsSendJob::dispatch($phone);
@@ -78,5 +78,15 @@ class AuthService extends BaseService implements AuthServiceInterface
         auth()->user()->tokens()->delete();
 
         return $this->ok();
+    }
+
+    private function storeNewUser(string $phone): void
+    {
+        $data = array(
+            'phone' => $phone,
+            'name' => 'user ' . uniqid(),
+        );
+
+        $this->repository->store($data);
     }
 }

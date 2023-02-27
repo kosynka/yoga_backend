@@ -23,12 +23,12 @@ class BaseRepository
         return $this->model->create($attributes);
     }
 
-    public function update(int $id, array $attributes): Model
-    {
-        $field = $this->model->find($id);
+    // public function update(int $id, array $attributes): Model
+    // {
+    //     $field = $this->model->find($id);
 
-        return $field->update($attributes);
-    }
+    //     return $field->update($attributes);
+    // }
 
     public function delete(int $id): void
     {

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\ApiController;
-use Illuminate\Http\Request;
+use App\Http\Requests\User\IndexUserRequest;
+use App\Http\Requests\User\UpdateUserRequest;
+use App\Services\Contracts\UserServiceInterface;
 
 /**
  * @OA\Schema(
@@ -16,6 +18,13 @@ use Illuminate\Http\Request;
  */
 class UserController extends ApiController
 {
+    private UserServiceInterface $service;
+
+    public function __construct(UserServiceInterface $service)
+    {
+        $this->service = $service;
+    }
+
     /**
      * @OA\Get(
      *     tags={"user"},
@@ -31,23 +40,15 @@ class UserController extends ApiController
      *         )
      *     ),
      *     path="/api/v1/user/",
-     *     @OA\Response(response="200", description="Список верифицированных пользователей")
+     *     @OA\Response(response="200", description="Список пользователей")
      * )
      */
-    public function index()
+    public function index(IndexUserRequest $request)
     {
-        //
-    }
+        $data = $request->validated();
+        dd($data);
 
-    /**
-     * @OA\Post(
-     *     path="/api/v1/user/register",
-     *     @OA\Response(response="200", description="Создать нового пользователя")
-     * )
-     */
-    public function create()
-    {
-        //
+        return $this->result($this->service->index($data));
     }
 
     /**
@@ -58,7 +59,7 @@ class UserController extends ApiController
      */
     public function show(int $id)
     {
-        //
+        return $this->result($this->service->show($id));
     }
 
     /**
@@ -67,9 +68,11 @@ class UserController extends ApiController
      *     @OA\Response(response="200", description="Изменить данные пользователя по id")
      * )
      */
-    public function update(int $id, Request $request)
+    public function update(UpdateUserRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        return $this->result($this->service->update($data));
     }
 
     /**
@@ -78,8 +81,8 @@ class UserController extends ApiController
      *     @OA\Response(response="200", description="Удалить пользователя по id")
      * )
      */
-    public function delete(int $id)
+    public function delete()
     {
-        //
+        return $this->result($this->service->delete());
     }
 }

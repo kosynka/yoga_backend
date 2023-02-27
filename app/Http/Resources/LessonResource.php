@@ -16,9 +16,9 @@ class LessonResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'type' => (new TypeResource($this->whenLoaded('type'))),
+            'type' => (new TypeResource($this->type)),
             'instructor_id' => $this->whenNotNull($this->instructor_id),
-            // 'instructor' => (new UserResource($this->whenLoaded('instructor'))),
+            // 'instructor' => (new UserResource($this->instructor)),
             'starts_at' => $this->starts_at,
             'comment' => $this->whenNotNull($this->comment),
         ];

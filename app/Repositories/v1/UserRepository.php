@@ -5,6 +5,7 @@ namespace App\Repositories\v1;
 use App\Models\User;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Repositories\BaseRepository;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class UserRepository extends BaseRepository implements UserRepositoryInterface
@@ -12,6 +13,11 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     public function __construct(User $model)
     {
         parent::__construct($model);
+    }
+
+    public function all(): ?Collection
+    {
+        return $this->model->all();
     }
 
     public function findByPhone(string $phone): ?Model
@@ -31,17 +37,16 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         return $this->model->create($attributes);
     }
 
-    public function update(int $id, array $attributes): Model
+    public function update($model, array $attributes): Model
     {
-        $field = $this->model->find($id);
+        $model->update($attributes);
+        $model->save();
 
-        return $field->update($attributes);
+        return $model;
     }
 
-    public function delete(int $id): void
+    public function delete($model): void
     {
-        $field = $this->model->find($id);
-
-        $field->delete();
+        $model->delete();
     }
 }

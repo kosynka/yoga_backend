@@ -23,12 +23,14 @@ Route::prefix('v1')->middleware('log')->group(function () {
         Route::post('/logout', 'logout')->middleware('auth:sanctum');
     });
 
-    Route::group(['middleware' => ['auth']], function() {
+    Route::group(['middleware' => ['auth:api-user']], function() {
         Route::group(['prefix' => 'users', 'controller' => UserController::class], function () {
+            Route::get('/', 'index');
+            Route::post('/', 'update');
+            Route::delete('/', 'delete');
+
+            Route::put('/update-token', 'updateToken');
             Route::get('/{id}', 'show');
-            Route::put('/{id}', 'update');
-            Route::post('/update-token', 'updateToken');
-            Route::delete('/{id}', 'delete');
         });
 
         Route::group(['prefix' => 'affiliates', 'controller' => AffiliateController::class], function () {

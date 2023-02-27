@@ -19,16 +19,16 @@ class UserResource extends JsonResource
             'role' => $this->role,
             'name' => $this->name,
             'phone' => $this->phone,
-            'photo' => (new FileResource($this->whenLoaded('photo'))),
+            'photo' => (new FileResource($this->photo)),
 
-            'favorite_affiliate' => (new AffiliateResource($this->whenLoaded('favoriteAffiliate'))),    // for users
-            'assignments' => AssignmentResource::collection($this->whenLoaded('assignments')),          // for users
+            'favorite_affiliate' => (new AffiliateResource($this->favoriteAffiliate)),    // for users
+            'assignments' => AssignmentResource::collection($this->assignments),          // for users
 
-            'works_in_affiliate' => (new AffiliateResource($this->whenLoaded('worksInAffiliate'))),     // for instructors
-            'lessons' => LessonResource::collection($this->whenLoaded('lessons')),                      // for instructors
+            'works_in_affiliate' => (new AffiliateResource($this->worksInAffiliate)),     // for instructors
+            'lessons' => LessonResource::collection($this->lessons),                      // for instructors
 
             'fb_token' => $this->whenNotNull($this->fb_token),
-            'phone_verified_at' => $this->phone_verified_at,
+            // 'phone_verified_at' => $this->phone_verified_at,
             'created_at' => $this->whenNotNull($this->created_at),
             'updated_at' => $this->whenNotNull($this->updated_at),
         ];

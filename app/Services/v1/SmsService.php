@@ -9,7 +9,7 @@ class SmsService
 {
     private array $config = [];
 
-    public function __construct($config)
+    public function __construct(array $config)
     {
         $this->config = $config;
     }
@@ -27,9 +27,25 @@ class SmsService
         Log::info(__METHOD__ . '. Верификация phone:' . $this->preparedId($phone) . '; код:' . $code . ' result:' . $result);
     }
 
-    public function check(string $phone, $code)
+    public function check(string $phone, string $code)
     {
-        //
+        $token = DB::table('verify_phone_token')
+            ->where([
+                ['phone', $phone],
+                ['code', $code],
+            ])->first();
+
+        if (is_null($token)) {
+            return false;
+        }
+
+        DB::table('verify_phone_token')
+            ->where([
+                ['phone', $phone],
+                ['code', $code],
+            ])->delete();
+
+        return true;
     }
 
     private function preparedPhone(string $phone): string
@@ -44,9 +60,9 @@ class SmsService
 
     private function insertRecord(string $phone, int $code): void
     {
-        DB::table('verify_sign_token')->insert([
+        DB::table('verify_phone_token')->updateOrInsert([
             'phone' => $phone,
-            'token' => $code,
+            'code' => $code,
         ]);
     }
 
@@ -56,7 +72,7 @@ class SmsService
             'login' => $this->config['login'],
             'psw' => $this->config['password'],
             'phones' => $this->preparedPhone($phone),
-            'mes' => 'Ваш код для подтверждения: ' . $code,
+            'mes' => 'Ваш код: ' . $code,
             'id' => $this->preparedId($phone),
         );
     }

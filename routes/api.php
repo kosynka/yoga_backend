@@ -18,12 +18,12 @@ Route::prefix('v1')->middleware('log')->group(function () {
     Route::controller(AuthController::class)->group(function () {
         Route::post('/login', 'login');
         Route::post('/register', 'register');
-        Route::post('/sendverify', 'sendOtp');
-        Route::post('/verify', 'verifyOtp');
+        Route::post('/sendverify', 'sendverify');
+        Route::post('/verify', 'verify');
         Route::post('/logout', 'logout')->middleware('auth:sanctum');
     });
 
-    Route::group(['middleware' => ['auth:api-user', 'phone.verified']], function() {
+    Route::group(['middleware' => ['auth']], function() {
         Route::group(['prefix' => 'users', 'controller' => UserController::class], function () {
             Route::get('/{id}', 'show');
             Route::put('/{id}', 'update');

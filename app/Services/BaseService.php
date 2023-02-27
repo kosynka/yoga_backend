@@ -3,11 +3,24 @@
 
 namespace App\Services;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 
 class BaseService
-{
+{    
+    protected $model;
+
     protected $user;
+
+    /**
+     * BaseRepository constructor.
+     *
+     * @param Model $model
+     */     
+    public function __construct(Model $model)
+    {         
+        $this->model = $model;
+    }
 
     protected function defineUser()
     {
@@ -49,9 +62,9 @@ class BaseService
         return $this->result(['message' => $message]);
     }
 
-    private function writeLog(array $data, array $context = []): void
+    private function writeLog($data, array $context = []): void
     {
-        Log::info(__METHOD__ . ' ' . get_class($this) . __FUNCTION__ . ' ' . $data, $context);
+        Log::info(__METHOD__ . '  ' . get_class($this) . '->' . __FUNCTION__ . ' ' . $data, $context);
     }
 
     protected function result(array $data): array

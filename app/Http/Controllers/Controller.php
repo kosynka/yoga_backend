@@ -8,19 +8,6 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use OpenApi\Annotations as OA;
 
-/**
- * @OA\Info(
- *     title="Yoga API documentation",
- *     version="0.1",
- *      @OA\Contact(
- *          url="http://t.me/kosynka"
- *      ),
- * ),
- *  @OA\Server(
- *      description="Local API Server",
- *      url="https://127.0.0.1:8000/"
- *  ),
- */
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;

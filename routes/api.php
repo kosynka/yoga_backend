@@ -10,12 +10,12 @@ use App\Http\Controllers\Api\v1\TypeController;
 use App\Http\Controllers\Api\v1\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('v1')->middleware('log')->group(function () {
+Route::group(['prefix' => 'v1', 'middleware' => ['log']], function () {
     Route::get('cities', [DictionaryController::class, 'cities']);
 
     Route::post('/feedback', [SupportController::class, 'send']);
 
-    Route::controller(AuthController::class)->group(function () {
+    Route::group(['controller' => AuthController::class], function () {
         Route::post('/login', 'login');
         Route::post('/register', 'register');
         Route::post('/sendverify', 'sendverify');

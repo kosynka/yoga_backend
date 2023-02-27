@@ -14,19 +14,18 @@
         }
     ],
     "paths": {
-        "/api/v1/user/": {
+        "/api/v1/users": {
             "get": {
                 "tags": [
-                    "user"
+                    "users"
                 ],
-                "summary": "Create user",
-                "description": "This can only be done by the logged in user.",
+                "summary": "Index user",
                 "operationId": "createUser",
                 "requestBody": {
-                    "description": "Created user object",
+                    "description": "Index of user objects",
                     "required": false,
                     "content": {
-                        "multipart/form-data": {
+                        "params": {
                             "schema": {
                                 "$ref": "#"
                             }
@@ -35,43 +34,57 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Список ввсех пользователей"
-                    }
-                }
-            }
-        },
-        "/api/v1/user/register": {
-            "post": {
-                "operationId": "f9baa163be911016656b372eb42f2940",
-                "responses": {
-                    "200": {
-                        "description": "Создать нового пользователя"
-                    }
-                }
-            }
-        },
-        "/api/v1/user/{id}": {
-            "get": {
-                "operationId": "cdb5c3a964506aedf8392745e825f90e",
-                "responses": {
-                    "200": {
-                        "description": "Показать пользователя по id"
+                        "description": "Список пользователей"
                     }
                 }
             },
             "put": {
-                "operationId": "e808de23b7fb1c74014d22da667c9966",
+                "tags": [
+                    "users"
+                ],
+                "summary": "Update user fb token",
+                "operationId": "updateUserFbToken",
                 "responses": {
                     "200": {
-                        "description": "Изменить данные пользователя по id"
+                        "description": "Изменить firebase token авторизованного пользователя"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Update user",
+                "operationId": "updateUser",
+                "responses": {
+                    "200": {
+                        "description": "Изменить данные авторизованного пользователя"
                     }
                 }
             },
             "delete": {
-                "operationId": "70649bef575dd794cf31ddeff8b209e1",
+                "tags": [
+                    "users"
+                ],
+                "summary": "Delete user",
+                "operationId": "deleteUser",
                 "responses": {
                     "200": {
-                        "description": "Удалить пользователя по id"
+                        "description": "Удалить авторизованного пользователя"
+                    }
+                }
+            }
+        },
+        "/api/v1/users/{id}": {
+            "get": {
+                "tags": [
+                    "users"
+                ],
+                "summary": "Show user",
+                "operationId": "showUser",
+                "responses": {
+                    "200": {
+                        "description": "Показать пользователя по id"
                     }
                 }
             }
@@ -81,7 +94,7 @@
         "schemas": {
             "UserController": {
                 "title": "UserController",
-                "description": "UserController APIs",
+                "description": "Авторизация требуется",
                 "xml": {
                     "name": "UserController"
                 }

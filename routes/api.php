@@ -27,38 +27,25 @@ Route::group(['prefix' => 'v1', 'middleware' => ['log']], function () {
         Route::group(['prefix' => 'users', 'controller' => UserController::class], function () {
             Route::get('/', 'index');
             Route::post('/', 'update');
-            Route::delete('/', 'delete');
-
             Route::put('/update-token', 'updateToken');
+            Route::delete('/', 'delete');
             Route::get('/{id}', 'show');
         });
 
-        Route::group(['prefix' => 'affiliates', 'controller' => AffiliateController::class], function () {
-            Route::get('/', 'index');
-            Route::get('/{id}', 'show');
-        });
+        Route::resource('affiliates', AffiliateController::class)->only([
+            'index', 'show'
+        ]);
 
-        Route::group(['prefix' => 'types', 'controller' => TypeController::class], function () {
-            Route::get('/', 'index');
-            Route::get('/{id}', 'show');
-            Route::put('/{id}', 'update');
-            Route::delete('/{id}', 'delete');
-        });
+        Route::resource('types', TypeController::class)->only([
+            'index', 'show', 'update', 'delete'
+        ]);
 
-        Route::group(['prefix' => 'assignments', 'controller' => AssignmentController::class], function () {
-            Route::get('/', 'index');
-            Route::post('/', 'create');
-            Route::get('/{id}', 'show');
-            Route::put('/{id}', 'update');
-            Route::delete('/{id}', 'delete');
-        });
+        Route::resource('assignments', AssignmentController::class)->only([
+            'index', 'store', 'show', 'update', 'delete'
+        ]);
 
-        Route::group(['prefix' => 'lessons', 'controller' => LessonController::class], function () {
-            Route::get('/', 'index');
-            Route::post('/', 'create');
-            Route::get('/{id}', 'show');
-            Route::put('/{id}', 'update');
-            Route::delete('/{id}', 'delete');
-        });
+        Route::resource('lessons', LessonController::class)->only([
+            'index', 'store', 'show', 'update', 'delete'
+        ]);
     });
 });

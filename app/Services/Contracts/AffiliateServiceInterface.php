@@ -2,13 +2,9 @@
 
 namespace App\Services\Contracts;
 
-interface UserServiceInterface
+interface AffiliateServiceInterface
 {
 	public function index(array $data);
 
 	public function show(int $id);
-
-	public function update(array $data);
-
-	public function destroy();
 }

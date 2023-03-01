@@ -52,9 +52,9 @@ class UserService extends BaseService implements UserServiceInterface
         ]);
     }
 
-	public function delete()
+	public function destroy()
     {
-        $this->repository->delete($this->user);
+        $this->repository->destroy($this->user);
 
         return $this->ok('Ваш аккаунт удален');
     }

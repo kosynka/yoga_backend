@@ -45,7 +45,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         return $model;
     }
 
-    public function delete($model): void
+    public function destroy($model): void
     {
         $model->delete();
     }

@@ -28,7 +28,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['log']], function () {
             Route::get('/', 'index');
             Route::post('/', 'update');
             Route::put('/update-token', 'updateToken');
-            Route::delete('/', 'delete');
+            Route::delete('/', 'destroy');
             Route::get('/{id}', 'show');
         });
 
@@ -37,15 +37,15 @@ Route::group(['prefix' => 'v1', 'middleware' => ['log']], function () {
         ]);
 
         Route::resource('types', TypeController::class)->only([
-            'index', 'show', 'update', 'delete'
+            'index', 'show'
         ]);
 
         Route::resource('assignments', AssignmentController::class)->only([
-            'index', 'store', 'show', 'update', 'delete'
+            'index', 'store', 'show', 'update', 'destroy'
         ]);
 
         Route::resource('lessons', LessonController::class)->only([
-            'index', 'store', 'show', 'update', 'delete'
+            'index', 'store', 'show', 'update', 'destroy'
         ]);
     });
 });

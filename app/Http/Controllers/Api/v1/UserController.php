@@ -46,7 +46,6 @@ class UserController extends ApiController
     public function index(IndexUserRequest $request)
     {
         $data = $request->validated();
-        dd($data);
 
         return $this->result($this->service->index($data));
     }
@@ -106,8 +105,8 @@ class UserController extends ApiController
      *     @OA\Response(response="200", description="Удалить авторизованного пользователя")
      * )
      */
-    public function delete()
+    public function destroy()
     {
-        return $this->result($this->service->delete());
+        return $this->result($this->service->destroy());
     }
 }

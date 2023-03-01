@@ -40,6 +40,16 @@ class User extends Authenticatable //implements MustVerifyEmail
         'remember_token',
     ];
 
+    public function isUser(): bool
+    {
+        return true ? $this->role === self::ROLE_USER : false;
+    }
+
+    public function isInstructor(): bool
+    {
+        return true ? $this->role === self::ROLE_INSTRUCTOR : false;
+    }
+
     public function photo(): BelongsTo
     {
         return $this->belongsTo(File::class, 'photo_id');

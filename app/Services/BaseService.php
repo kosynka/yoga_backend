@@ -3,12 +3,13 @@
 
 namespace App\Services;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 
 class BaseService
 {    
-    protected $user;
+    protected User $user;
 
     /**
      * BaseRepository constructor.

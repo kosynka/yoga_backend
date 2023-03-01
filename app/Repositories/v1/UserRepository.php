@@ -15,7 +15,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         parent::__construct($model);
     }
 
-    public function all(): ?Collection
+    public function all(array $attributes): ?Collection
     {
         return $this->model->all();
     }
@@ -23,11 +23,6 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     public function findByPhone(string $phone): ?Model
     {
         return $this->model->where('phone', $phone)->first();
-    }
-
-    public function find(int $id): ?Model
-    {
-        return $this->model->find($id);
     }
 
     public function store(array $attributes): Model

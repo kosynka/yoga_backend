@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Assignment;
+namespace App\Http\Requests\Lesson;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateAssignmentRequest extends FormRequest
+class CreateLessonRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,9 @@ class CreateAssignmentRequest extends FormRequest
     public function rules()
     {
         return [
-            'lesson_id' => ['required', 'integer', 'exists:lessons,id'],
+            'type_id' => ['required', 'integer', 'exists:types,id'],
+            'starts_at' => ['required', 'date_format:Y-m-d H:i'],
+            'comment' => ['nullable', 'string'],
         ];
     }
 }

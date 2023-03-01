@@ -15,13 +15,8 @@ class TypeRepository extends BaseRepository implements TypeRepositoryInterface
         parent::__construct($model);
     }
 
-    public function all(): ?Collection
+    public function all(array $attributes): ?Collection
     {
         return $this->model->all();
-    }
-
-    public function find(int $id): ?Model
-    {
-        return $this->model->find($id);
     }
 }

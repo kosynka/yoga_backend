@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 interface TypeRepositoryInterface
 {
-	public function all(): ?Collection;
+	public function all(array $attributes): ?Collection;
 
 	public function find(int $id): ?Model;
 }

@@ -55,7 +55,7 @@ class AssignmentService extends BaseService implements AssignmentServiceInterfac
     {
         $assignment = $this->repository->find($id);
 
-        if ($this->user->id === $assignment->id) {
+        if ($this->user->id === $assignment->user_id) {
             $assignment = $this->repository->update($id, $data);
         } else {
             return $this->errFobidden('Вы не можете изменить эту запись');

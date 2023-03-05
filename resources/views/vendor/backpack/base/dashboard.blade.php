@@ -11,5 +11,5 @@
 @endphp
 
 @section('content')
-  <p>Добро пожаловать!</p>
+  <p>Добро пожаловать !</p>
 @endsection

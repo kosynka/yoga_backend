@@ -17,7 +17,13 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
     public function all(array $attributes): ?Collection
     {
-        return $this->model->all();
+        $query = $this->model->when(isset($attributes['instructor_id']), function ($query) use ($attributes) {
+            $query->where('role', '!=', User::ROLE_ADMIN);
+        });
+
+        $query = $query->where('role', '!=', User::ROLE_ADMIN);
+
+        return $query->get();
     }
 
     public function findByPhone(string $phone): ?Model

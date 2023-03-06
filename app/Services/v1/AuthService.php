@@ -48,6 +48,12 @@ class AuthService extends BaseService implements AuthServiceInterface
 
     public function sendverify(string $phone)
     {
+        $user = $this->repository->findByPhone($phone);
+
+        if (!isset($user)) {
+			return $this->errFobidden('Пользователя с таким номером телефона не существует');
+        }
+
 		SmsSendJob::dispatch($phone);
 
         return $this->ok('На ваш телефон отправлен код верификации');

@@ -6,7 +6,6 @@ use App\Models\Affiliate;
 use App\Repositories\Contracts\AffiliateRepositoryInterface;
 use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 
 class AffiliateRepository extends BaseRepository implements AffiliateRepositoryInterface
 {

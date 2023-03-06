@@ -4,12 +4,14 @@ namespace App\Providers;
 
 use App\Repositories\Contracts\AffiliateRepositoryInterface;
 use App\Repositories\Contracts\AssignmentRepositoryInterface;
+use App\Repositories\Contracts\CityRepositoryInterface;
 use App\Repositories\Contracts\FileRepositoryInterface;
 use App\Repositories\Contracts\LessonRepositoryInterface;
 use App\Repositories\Contracts\TypeRepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Repositories\v1\AffiliateRepository;
 use App\Repositories\v1\AssignmentRepository;
+use App\Repositories\v1\CityRepository;
 use App\Repositories\v1\FileRepository;
 use App\Repositories\v1\LessonRepository;
 use App\Repositories\v1\TypeRepository;
@@ -31,5 +33,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(LessonRepositoryInterface::class, LessonRepository::class);
         $this->app->bind(AssignmentRepositoryInterface::class, AssignmentRepository::class);
         $this->app->bind(FileRepositoryInterface::class, FileRepository::class);
+        $this->app->bind(CityRepositoryInterface::class, CityRepository::class);
     }
 }

@@ -32,20 +32,32 @@ Route::group(['prefix' => 'v1', 'middleware' => ['log']], function () {
             Route::get('/{id}', 'show');
         });
 
-        Route::resource('affiliates', AffiliateController::class)->only([
-            'index', 'show'
-        ]);
+        Route::group(['prefix' => 'affiliates', 'controller' => AffiliateController::class], function () {
+            Route::get('/', 'index');
+            Route::get('/my', 'showFavorite')->middleware('check.role:user');
+            Route::get('/{id}', 'show');
+            Route::put('/{id}/favorite', 'like')->middleware('check.role:user');
+
+        });
 
         Route::resource('types', TypeController::class)->only([
             'index', 'show'
         ]);
 
-        Route::resource('assignments', AssignmentController::class)->only([
-            'index', 'store', 'show', 'update', 'destroy'
-        ]);
+        Route::group(['prefix' => 'assignments', 'controller' => AssignmentController::class], function () {
+            Route::get('/', 'index');
+            Route::post('/', 'store')->middleware('check.role:user');
+            Route::get('/{id}', 'show');
+            Route::put('/{id}', 'update')->middleware('check.role:user');
+            Route::delete('/{id}', 'destroy')->middleware('check.role:user');
+        });
 
-        Route::resource('lessons', LessonController::class)->only([
-            'index', 'store', 'show', 'update', 'destroy'
-        ]);
+        Route::group(['prefix' => 'lessons', 'controller' => LessonController::class], function () {
+            Route::get('/', 'index');
+            Route::post('/', 'store')->middleware('check.role:instructor');
+            Route::get('/{id}', 'show');
+            Route::put('/{id}', 'update')->middleware('check.role:instructor');
+            Route::delete('/{id}', 'destroy')->middleware('check.role:instructor');
+        });
     });
 });

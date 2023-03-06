@@ -13,7 +13,10 @@ class UserService extends BaseService implements UserServiceInterface
     private UserRepositoryInterface $repository;
     private FileServiceInterface $fileService;
 
-    public function __construct(UserRepositoryInterface $repository, FileServiceInterface $fileService)
+    public function __construct(
+        UserRepositoryInterface $repository,
+        FileServiceInterface $fileService,
+        )
     {
         parent::__construct();
 

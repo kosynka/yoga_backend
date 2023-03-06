@@ -57,22 +57,22 @@ class User extends Authenticatable //implements MustVerifyEmail
 
     public function favoriteAffiliate(): BelongsTo      // for users
     {
-        return $this->belongsTo(Affiliate::class);
+        return $this->belongsTo(Affiliate::class, 'favorite_affiliate_id');
     }
 
     public function assignments(): HasMany              // for users
     {
-        return $this->hasMany(Assignment::class);
+        return $this->hasMany(Assignment::class, 'user_id', 'id');
     }
 
     public function worksInAffiliate(): BelongsTo       // for instructors
     {
-        return $this->belongsTo(Affiliate::class);
+        return $this->belongsTo(Affiliate::class, 'works_in_affiliate_id');
     }
 
     public function lessons(): HasMany                  // for instructors
     {
-        return $this->hasMany(Lesson::class, 'instructor_id');
+        return $this->hasMany(Lesson::class, 'instructor_id', 'id');
     }
 
     public function getRole(): string

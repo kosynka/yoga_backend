@@ -22,6 +22,7 @@ class AffiliateResource extends JsonResource
             'image' => (new FileResource($this->image)),
             'city' => (new CityResource($this->city)),
             'master' => (new UserResource($this->master)),
+            'lesson' => LessonResource::collection($this->lessons),
         ];
     }
 }

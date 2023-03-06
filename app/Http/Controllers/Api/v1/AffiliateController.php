@@ -26,4 +26,14 @@ class AffiliateController extends ApiController
     {
         return $this->result($this->service->show($id));
     }
+
+    public function like(int $id)
+    {
+        return $this->result($this->service->like($id));
+    }
+
+    public function showFavorite()
+    {
+        return $this->result($this->service->showFavorite());
+    }
 }

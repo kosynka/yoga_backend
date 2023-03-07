@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 
+use function PHPUnit\Framework\isNull;
+
 class BaseService
 {    
     protected User $user;
@@ -17,8 +19,10 @@ class BaseService
      * @param Model $model
      */     
     public function __construct()
-    {         
-        $this->user = auth('api-user')->user();
+    {
+        if (!isNull(auth('api-user')->user())) {
+            $this->user = auth('api-user')->user();
+        }
     }
 
     protected function defineUser()

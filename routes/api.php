@@ -25,24 +25,24 @@ Route::group(['prefix' => 'v1', 'middleware' => ['log']], function () {
 
     Route::group(['middleware' => ['auth:api-user']], function() {
         Route::group(['prefix' => 'users', 'controller' => UserController::class], function () {
-            Route::get('/', 'index');
+            Route::get('/', 'index')->withoutMiddleware('auth:api-user');
             Route::post('/', 'update');
             Route::put('/update-token', 'updateToken');
             Route::delete('/', 'destroy');
-            Route::get('/{id}', 'show');
+            Route::get('/{id}', 'show')->withoutMiddleware('auth:api-user');
         });
 
         Route::group(['prefix' => 'affiliates', 'controller' => AffiliateController::class], function () {
-            Route::get('/', 'index');
+            Route::get('/', 'index')->withoutMiddleware('auth:api-user');
             Route::get('/my', 'showFavorite')->middleware('check.role:user');
-            Route::get('/{id}', 'show');
+            Route::get('/{id}', 'show')->withoutMiddleware('auth:api-user');
             Route::put('/{id}/favorite', 'like')->middleware('check.role:user');
 
         });
 
         Route::resource('types', TypeController::class)->only([
             'index', 'show'
-        ]);
+        ])->withoutMiddleware('auth:api-user');
 
         Route::group(['prefix' => 'assignments', 'controller' => AssignmentController::class], function () {
             Route::get('/', 'index');
@@ -53,9 +53,9 @@ Route::group(['prefix' => 'v1', 'middleware' => ['log']], function () {
         });
 
         Route::group(['prefix' => 'lessons', 'controller' => LessonController::class], function () {
-            Route::get('/', 'index');
+            Route::get('/', 'index')->withoutMiddleware('auth:api-user');
             Route::post('/', 'store')->middleware('check.role:instructor');
-            Route::get('/{id}', 'show');
+            Route::get('/{id}', 'show')->withoutMiddleware('auth:api-user');
             Route::put('/{id}', 'update')->middleware('check.role:instructor');
             Route::delete('/{id}', 'destroy')->middleware('check.role:instructor');
         });

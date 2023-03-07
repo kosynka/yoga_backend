@@ -7,6 +7,8 @@ use App\Repositories\Contracts\LessonRepositoryInterface;
 use App\Services\BaseService;
 use App\Services\Contracts\LessonServiceInterface;
 
+use function PHPUnit\Framework\isNull;
+
 class LessonService extends BaseService implements LessonServiceInterface
 {
     private LessonRepositoryInterface $repository;
@@ -20,7 +22,7 @@ class LessonService extends BaseService implements LessonServiceInterface
 
     public function index(array $data)
     {
-        if ($this->user->isInstructor()) {
+        if (isset($this->user) && $this->user->isInstructor()) {
             $data['instructor_id'] = $this->user->id;
         }
 

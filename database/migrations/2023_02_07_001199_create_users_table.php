@@ -26,6 +26,8 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
 
+            $table->longText('description')->nullable();
+
             $table->foreignId('photo_id')
                 ->nullable()
                 ->constrained('files')

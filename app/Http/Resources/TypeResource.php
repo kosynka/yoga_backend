@@ -17,7 +17,7 @@ class TypeResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'description' => $this->whenNotNull($this->description),
+            'description' => $this->description,
             'created_at' => $this->created_at,
         ];
     }

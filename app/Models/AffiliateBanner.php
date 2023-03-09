@@ -5,16 +5,16 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class File extends Model
+class AffiliateBanner extends Model
 {
     use HasFactory, CrudTrait;
 
     protected $fillable = [
         'id',
-        'name',
-        'path',
+        'affiliate_id',
+        'image_id',
     ];
 
     protected $hidden = [
@@ -22,13 +22,13 @@ class File extends Model
         'updated_at',
     ];
 
-    public function users(): HasMany
+    public function affiliate(): BelongsTo
     {
-        return $this->hasMany(User::class);
+        return $this->belongsTo(Affiliate::class, 'affiliate_id', 'id');
     }
 
-    public function banners(): HasMany
+    public function image(): BelongsTo
     {
-        return $this->hasMany(AffiliateBanner::class, 'image_id');
+        return $this->belongsTo(File::class, 'image_id', 'id');
     }
 }

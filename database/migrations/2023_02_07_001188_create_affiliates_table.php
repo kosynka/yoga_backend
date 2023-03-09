@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('affiliates', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('phone')->nullable();
             $table->longText('description')->nullable();
-            $table->string('address');
 
             $table->foreignId('image_id')
                 ->nullable()

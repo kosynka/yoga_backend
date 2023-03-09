@@ -19,18 +19,18 @@ class UserResource extends JsonResource
             'role' => $this->role,
             'name' => $this->name,
             'phone' => $this->phone,
+            'description' => $this->description,
             'photo' => (new FileResource($this->photo)),
 
-            'favorite_affiliate' => (new AffiliateResource($this->favoriteAffiliate)),    // for users
-            'assignments' => AssignmentResource::collection($this->assignments),          // for users
+            'favorite_affiliate' => $this->favoriteAffiliate,                           // for users
+            'assignments' => AssignmentResource::collection($this->assignments),        // for users
 
-            'works_in_affiliate' => (new AffiliateResource($this->worksInAffiliate)),     // for instructors
-            'lessons' => LessonResource::collection($this->lessons),                      // for instructors
+            'works_in_affiliate' => $this->worksInAffiliate,                            // for instructors
+            'lessons' => LessonResource::collection($this->lessons),                    // for instructors
 
-            'fb_token' => $this->whenNotNull($this->fb_token),
-            // 'phone_verified_at' => $this->phone_verified_at,
-            'created_at' => $this->whenNotNull($this->created_at),
-            'updated_at' => $this->whenNotNull($this->updated_at),
+            'fb_token' => $this->fb_token,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }

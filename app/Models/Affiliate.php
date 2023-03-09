@@ -17,12 +17,10 @@ class Affiliate extends Model
     protected $fillable = [
         'id',
         'name',
+        'phone',
         'description',
-        'address',
         'image_id',
         'city_id',
-        'master_id',
-        // 'parent_id',
     ];
 
     protected $hidden = [
@@ -51,6 +49,23 @@ class Affiliate extends Model
         return $this->hasMany(User::class, 'works_in_affiliate_id');
     }
 
+    public function addresses(): HasMany
+    {
+        return $this->hasMany(Address::class);
+    }
+
+    public function bannersImages(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            File::class,
+            AffiliateBanner::class,
+            'affiliate_id',
+            'id',
+            'id',
+            'image_id',
+        );
+    }
+
     public function lessons(): HasManyThrough
     {
         return $this->hasManyThrough(
@@ -61,5 +76,18 @@ class Affiliate extends Model
             'id',
             'id',
         );
+    }
+
+    public function loadings()
+    {
+        $lessonsCount = $this->lessons()->count();
+        $instructorsCount = $this->instructors()->count();
+        if ($lessonsCount && $instructorsCount) {
+            $loadings = $lessonsCount / $instructorsCount;
+        } else {
+            $loadings = 0;
+        }
+
+        return $loadings;
     }
 }

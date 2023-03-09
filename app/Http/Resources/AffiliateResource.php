@@ -17,12 +17,15 @@ class AffiliateResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'description' => $this->whenNotNull($this->description),
-            'address' => $this->address,
+            'phone' => $this->phone,
+            'description' => $this->description,
+            'address' => AddressResource::collection($this->addresses),
             'image' => (new FileResource($this->image)),
+            'banners' => FileResource::collection($this->bannersImages),
             'city' => (new CityResource($this->city)),
-            'master' => (new UserResource($this->master)),
-            'lesson' => LessonResource::collection($this->lessons),
+            'loadings' => $this->loadings(),
+            'lessons' => LessonResource::collection($this->lessons),
+            'instructors' => UserResource::collection($this->instructors),
         ];
     }
 }

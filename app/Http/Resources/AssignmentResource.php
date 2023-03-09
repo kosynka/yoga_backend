@@ -16,7 +16,7 @@ class AssignmentResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user_id' => $this->whenNotNull($this->user_id),
+            'user_id' => $this->user_id,
             // 'user' => (new UserResource($this->user)),
             'lesson' => (new LessonResource($this->lesson)),
         ];

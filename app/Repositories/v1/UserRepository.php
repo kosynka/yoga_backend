@@ -44,6 +44,21 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         return $this->model->where('phone', $phone)->first();
     }
 
+    public function findWithFilter($attributes, int $id)
+    {
+        if (isset($attributes['starts_at'])) {
+            $query = $this->model->with(['lessons' => function ($query) use ($attributes) {
+                $query->whereDate('starts_at', $attributes['starts_at']);
+            }]);
+        } else {
+            $query = $this->model;
+        }
+
+        $query->where('id', $id)->first();
+
+        return $query;
+    }
+
     public function store(array $attributes): Model
     {
         $attributes['role'] = User::ROLE_USER;

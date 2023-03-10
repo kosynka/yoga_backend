@@ -6,7 +6,7 @@ interface UserServiceInterface
 {
 	public function index(array $data);
 
-	public function show(int $id);
+	public function show(array $data, int $id);
 
 	public function update(array $data);
 

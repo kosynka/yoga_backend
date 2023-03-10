@@ -33,9 +33,9 @@ class UserService extends BaseService implements UserServiceInterface
         ]);
     }
 
-	public function show(int $id)
+	public function show(array $data, int $id)
     {
-        $user = $this->repository->find($id);
+        $user = $this->repository->findWithFilter($data, $id);
 
         return $this->result([
             'user' => (new UserResource($user)),

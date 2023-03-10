@@ -11,6 +11,8 @@ interface UserRepositoryInterface
 
 	public function find(int $id): ?Model;
 
+	public function findWithFilter(array $attributes, int $id);
+
 	public function store(array $attributes): Model;
 
 	public function findByPhone(string $phone): ?Model;

@@ -30,16 +30,17 @@ class AffiliateRepository extends BaseRepository implements AffiliateRepositoryI
 
     public function findWithFilter($attributes, int $id)
     {
-        $query = $this->model::with('lessons');
-
         if (isset($attributes['starts_at'])) {
-            // $query->leftJoin('lessons');
-            $query->whereHas('lessons', function ($query) use ($attributes) {
-                $query->whereDate('lessons.starts_at', 'like', $attributes['starts_at']);
-            });
+            $query = $this->model->with(['lessons' => function ($query) use ($attributes) {
+                $query->whereDate('starts_at', $attributes['starts_at']);
+            }]);
+        } else {
+            $query = $this->model;
         }
 
-        return $query->first();
+        $query->where('id', $id)->first();
+
+        return $query;
     }
 
     private function filter($attributes)

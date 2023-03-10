@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\ApiController;
+use App\Http\Requests\FilterDateRequest;
 use App\Http\Requests\User\IndexUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Http\Requests\User\UpdateUserTokenRequest;
@@ -59,9 +60,11 @@ class UserController extends ApiController
      *     @OA\Response(response="200", description="Показать пользователя по id")
      * )
      */
-    public function show(int $id)
+    public function show(FilterDateRequest $request, int $id)
     {
-        return $this->result($this->service->show($id));
+        $data = $request->validated();
+
+        return $this->result($this->service->show($data, $id));
     }
 
     /**

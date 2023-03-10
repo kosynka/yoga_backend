@@ -25,6 +25,7 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'name' => ['nullable', 'string'],
+            'description' => ['nullable'],
             'phone' => ['nullable', 'string'],
             'photo' => ['nullable', 'mimes:png,jpg,jpeg'],
         ];

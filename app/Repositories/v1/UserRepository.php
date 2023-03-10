@@ -17,11 +17,24 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
     public function all(array $attributes): ?Collection
     {
-        $query = $this->model->when(isset($attributes['instructor_id']), function ($query) use ($attributes) {
-            $query->where('role', '!=', User::ROLE_ADMIN);
+        $query = $this->filter($attributes);
+
+        $query->when(isset($attributes['type']), function ($query) use ($attributes) {
+            $query->where('role', $attributes['type']);
+        });
+        $query->when(isset($attributes['city_id']), function ($query) use ($attributes) {
+            $query->whereHas('worksInAffiliate', function ($query) use ($attributes) {
+                $query->where('city_id', $attributes['city_id']);
+            });
+        });
+        $query->when(isset($attributes['affiliate_id']), function ($query) use ($attributes) {
+            $query->where('works_in_affiliate_id', $attributes['affiliate_id']);
         });
 
-        $query = $query->where('role', '!=', User::ROLE_ADMIN);
+        $query->where('role', '!=', User::ROLE_ADMIN);
+
+        $this->paginate($query, $attributes);
+        $this->order($query, $attributes);
 
         return $query->get();
     }
@@ -49,5 +62,13 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
     public function destroy($model): void
     {
         $model->delete();
+    }
+
+    private function filter($attributes)
+    {
+        return $this->model->with('worksInAffiliate')->when(isset($attributes['filter']), function ($query) use ($attributes) {
+            $query->where('name', 'LIKE', '%' . $attributes['filter'] . '%')
+                ->orWhere('description', 'LIKE', '%' . $attributes['filter'] . '%');
+        });
     }
 }

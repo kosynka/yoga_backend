@@ -46,7 +46,7 @@ class Affiliate extends Model
 
     public function instructors(): HasMany
     {
-        return $this->hasMany(User::class, 'works_in_affiliate_id');
+        return $this->hasMany(User::class, 'works_in_affiliate_id', 'id');
     }
 
     public function addresses(): HasMany

@@ -26,13 +26,15 @@ class IndexUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['nullable', 'string'],
+            'filter' => ['nullable', 'string'],
             'type' => ['nullable', new Enum(UserRole::class)],
 
             'page' => ['nullable', 'integer', 'min:1'],
             'limit' => ['nullable', 'integer', 'min:1'],
             'sortBy' => ['nullable', 'string'],
             'descending' => ['nullable', 'boolean'],
+            'affiliate_id' => ['nullable', 'integer', 'exists:affiliates,id'],
+            'city_id' => ['nullable', 'integer', 'exists:cities,id'],
         ];
     }
 }

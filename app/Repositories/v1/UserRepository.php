@@ -54,9 +54,9 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             $query = $this->model;
         }
 
-        $query->where('id', $id)->first();
+        $query->where('id', $id);
 
-        return $query;
+        return $query->first();
     }
 
     public function store(array $attributes): Model

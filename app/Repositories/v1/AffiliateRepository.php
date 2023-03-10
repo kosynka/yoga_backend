@@ -38,9 +38,9 @@ class AffiliateRepository extends BaseRepository implements AffiliateRepositoryI
             $query = $this->model;
         }
 
-        $query->where('id', $id)->first();
+        $query->where('id', $id);
 
-        return $query;
+        return $query->first();
     }
 
     private function filter($attributes)

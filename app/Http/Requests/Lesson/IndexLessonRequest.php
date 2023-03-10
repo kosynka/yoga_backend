@@ -24,7 +24,14 @@ class IndexLessonRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'filter' => ['nullable', 'string'],
+            'page' => ['nullable', 'integer', 'min:1'],
+            'limit' => ['nullable', 'integer', 'min:1'],
+            'sortBy' => ['nullable', 'string'],
+            'descending' => ['nullable', 'boolean'],
+            'starts_at' => ['nullable', 'date'],
+            'type_id' => ['nullable', 'integer', 'exists:types,id'],
+            'instructor_id' => ['nullable', 'integer', 'exists:users,id'],
         ];
     }
 }

@@ -58,11 +58,13 @@ class AffiliateService extends BaseService implements AffiliateServiceInterface
         return $this->ok();
     }
 
-	public function show(int $id)
+	public function show(array $data, int $id)
     {
-        $affiliate = $this->repository->find($id);
+        $affiliate = $this->repository->findWithFilter($data, $id);
 
-        // dd($affiliate->lessons, $affiliate->instructors);
+        // if (!isset($affiliate)) {
+        //     return $this->errNotFound('');
+        // }
 
         return $this->result([
             'affiliate' => (new AffiliateResource($affiliate)),

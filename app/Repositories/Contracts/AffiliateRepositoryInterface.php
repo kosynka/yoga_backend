@@ -10,4 +10,6 @@ interface AffiliateRepositoryInterface
 	public function all(array $attributes): ?Collection;
 
 	public function find(int $id): ?Model;
+
+	public function findWithFilter(array $attributes, int $id);
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\ApiController;
 use App\Http\Requests\Affiliate\IndexAffiliateRequest;
+use App\Http\Requests\FilterDateRequest;
 use App\Services\Contracts\AffiliateServiceInterface;
 
 class AffiliateController extends ApiController
@@ -22,9 +23,11 @@ class AffiliateController extends ApiController
         return $this->result($this->service->index($data));
     }
 
-    public function show(int $id)
+    public function show(FilterDateRequest $request, int $id)
     {
-        return $this->result($this->service->show($id));
+        $data = $request->validated();
+
+        return $this->result($this->service->show($data, $id));
     }
 
     public function like(int $id)

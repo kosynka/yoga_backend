@@ -8,7 +8,7 @@ interface AffiliateServiceInterface
 
 	public function like(int $id);
 
-	public function show(int $id);
+	public function show(array $data, int $id);
 
 	public function showFavorite();
 }

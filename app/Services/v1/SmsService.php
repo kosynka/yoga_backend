@@ -18,7 +18,7 @@ class SmsService
     {
         $code = rand(100000, 999999);
 
-        $this->insertRecord($phone, $code);
+        // $this->insertRecord($phone, $code);
         $data = $this->prepareData($phone, $code);
         $options = $this->generateOptions($data);
         $context  = stream_context_create($options);
@@ -29,24 +29,29 @@ class SmsService
 
     public function check(string $phone, string $code)
     {
-        $token = DB::table('verify_phone_token')
-            ->where([
-                ['phone', $phone],
-                ['code', $code],
-            ])->first();
-
-        if (is_null($token)) {
-            return false;
-        }
-
-        DB::table('verify_phone_token')
-            ->where([
-                ['phone', $phone],
-                ['code', $code],
-            ])->delete();
-
         return true;
     }
+
+    // public function check(string $phone, string $code)
+    // {
+    //     $token = DB::table('verify_phone_token')
+    //         ->where([
+    //             ['phone', $phone],
+    //             ['code', $code],
+    //         ])->first();
+
+    //     if (is_null($token)) {
+    //         return false;
+    //     }
+
+    //     DB::table('verify_phone_token')
+    //         ->where([
+    //             ['phone', $phone],
+    //             ['code', $code],
+    //         ])->delete();
+
+    //     return true;
+    // }
 
     private function preparedPhone(string $phone): string
     {

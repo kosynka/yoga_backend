@@ -35,7 +35,7 @@ class AffiliateService extends BaseService implements AffiliateServiceInterface
 
         return $this->result([
             'favorite_id' => $favorite,
-            'affiliate' => AffiliateResource::collection($affiliates),
+            'affiliate' => AffiliateResource::collection($affiliates->load('instructors')),
         ]);
     }
 

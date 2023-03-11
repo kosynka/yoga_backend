@@ -21,6 +21,7 @@ class LessonResource extends JsonResource
             'starts_at' => $this->starts_at,
             'continuance' => $this->continuance,
             'participants_limitation' => $this->participants_limitation,
+            'assignments_amount' => $this->assignmentsAmount(),
             'comment' => $this->comment,
             'assignments' => AssignmentResource::collection($this->whenLoaded('assignments')),
         ];

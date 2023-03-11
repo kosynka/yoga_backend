@@ -19,6 +19,7 @@ class Affiliate extends Model
         'name',
         'phone',
         'description',
+        'link',
         'image_id',
         'city_id',
     ];

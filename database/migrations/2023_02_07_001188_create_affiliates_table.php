@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('phone')->nullable();
             $table->longText('description')->nullable();
+            $table->string('link')->nullable();
 
             $table->foreignId('image_id')
                 ->nullable()

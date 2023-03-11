@@ -19,6 +19,7 @@ class AffiliateResource extends JsonResource
             'name' => $this->name,
             'phone' => $this->phone,
             'description' => $this->description,
+            'link' => $this->link,
             'address' => AddressResource::collection($this->addresses),
             'image' => (new FileResource($this->image)),
             'banners' => FileResource::collection($this->bannersImages),

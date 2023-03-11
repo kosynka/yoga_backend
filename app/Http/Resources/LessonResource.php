@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Benchmark;
 
 class LessonResource extends JsonResource
 {
@@ -24,6 +25,7 @@ class LessonResource extends JsonResource
             'assignments_amount' => $this->assignmentsAmount(),
             'comment' => $this->comment,
             'assignments' => AssignmentResource::collection($this->whenLoaded('assignments')),
+            // 'affiliate' => (new AffiliateResource($this->affiliate)),
         ];
     }
 }

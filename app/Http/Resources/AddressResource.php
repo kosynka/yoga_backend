@@ -17,6 +17,7 @@ class AddressResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'affiliate_id' => $this->affiliate_id,
         ];
     }
 }

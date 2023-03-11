@@ -69,7 +69,7 @@ class AffiliateService extends BaseService implements AffiliateServiceInterface
         $affiliate = $this->repository->findWithFilter($data, $id);
 
         return $this->result([
-            'affiliate' => (new AffiliateResource($affiliate)),
+            'affiliate' => (new AffiliateResource($affiliate->load('instructors'))),
         ]);
     }
 
@@ -82,7 +82,7 @@ class AffiliateService extends BaseService implements AffiliateServiceInterface
         }
 
         return $this->result([
-            'affiliate' => (new AffiliateResource($affiliate)),
+            'affiliate' => (new AffiliateResource($affiliate->load('lessons', 'instructors'))),
         ]);
     }
 }

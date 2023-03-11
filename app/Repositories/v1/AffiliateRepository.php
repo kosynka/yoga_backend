@@ -35,7 +35,7 @@ class AffiliateRepository extends BaseRepository implements AffiliateRepositoryI
                 $query->whereDate('starts_at', $attributes['starts_at']);
             }]);
         } else {
-            $query = $this->model;
+            return $this->model->with('lessons')->find($id);
         }
 
         $query->where('id', $id);

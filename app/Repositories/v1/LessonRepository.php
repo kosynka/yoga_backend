@@ -51,8 +51,16 @@ class LessonRepository extends BaseRepository implements LessonRepositoryInterfa
         })
         ->when(isset($attributes['starts_at']), function ($query) use ($attributes) {
             $query->whereDate('starts_at', $attributes['starts_at']);
-        }, function ($query) {
-            $query->whereDate('starts_at', Carbon::today());
         });
+        // }, function ($query) {
+        //     $query->whereDate('starts_at', Carbon::today());
+        // });
+    }
+
+    public function isParticipantsLimitEndedUp(int $id): bool
+    {
+        $model = $this->find($id);
+
+        return $model->isParticipantsLimitEndedUp();
     }
 }

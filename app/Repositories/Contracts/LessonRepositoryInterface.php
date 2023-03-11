@@ -16,4 +16,6 @@ interface LessonRepositoryInterface
 	public function update(int $id, array $attributes): Model;
 
 	public function destroy(int $id): void;
+
+	public function isParticipantsLimitEndedUp(int $id): bool;
 }

@@ -4,30 +4,37 @@ namespace App\Services\v1;
 
 use App\Http\Resources\AssignmentResource;
 use App\Repositories\Contracts\AssignmentRepositoryInterface;
+use App\Repositories\Contracts\LessonRepositoryInterface;
 use App\Services\BaseService;
 use App\Services\Contracts\AssignmentServiceInterface;
 
 class AssignmentService extends BaseService implements AssignmentServiceInterface
 {
     private AssignmentRepositoryInterface $repository;
+    private LessonRepositoryInterface $lessonRepository;
 
-    public function __construct(AssignmentRepositoryInterface $repository)
+    public function __construct(
+        AssignmentRepositoryInterface $repository,
+        LessonRepositoryInterface $lessonRepository,
+        )
     {
+        $this->user = auth('api-user')->user();
         parent::__construct();
 
         $this->repository = $repository;
+        $this->lessonRepository = $lessonRepository;
     }
 
     public function index(array $data)
     {
-        if ($this->user->isUser()) {
+        if (isset($this->user) && $this->user->isUser()) {
             $data['user_id'] = $this->user->id;
         }
 
         $assignments = $this->repository->all($data);
 
         return $this->result([
-            'assignment' => AssignmentResource::collection($assignments),
+            'assignment' => AssignmentResource::collection($assignments->load('lesson')),
         ]);
     }
 
@@ -35,10 +42,14 @@ class AssignmentService extends BaseService implements AssignmentServiceInterfac
     {
         $data['user_id'] = $this->user->id;
 
+        if (!$this->isParticipantsLimitEndedUp($data['lesson_id'])) {
+            return $this->ok('Свободных мест не осталось');
+        }
+
         $assignment = $this->repository->store($data);
 
         return $this->result([
-            'assignment' => (new AssignmentResource($assignment)),
+            'assignment' => (new AssignmentResource($assignment->load('lesson'))),
         ]);
     }
 
@@ -47,7 +58,7 @@ class AssignmentService extends BaseService implements AssignmentServiceInterfac
         $assignment = $this->repository->find($id);
 
         return $this->result([
-            'assignment' => (new AssignmentResource($assignment)),
+            'assignment' => (new AssignmentResource($assignment->load('lesson'))),
         ]);
     }
 
@@ -61,9 +72,8 @@ class AssignmentService extends BaseService implements AssignmentServiceInterfac
             return $this->errFobidden('Вы не можете изменить эту запись');
         }
 
-
         return $this->result([
-            'assignment' => (new AssignmentResource($assignment)),
+            'assignment' => (new AssignmentResource($assignment->load('lesson'))),
         ]);
     }
 
@@ -78,5 +88,10 @@ class AssignmentService extends BaseService implements AssignmentServiceInterfac
         } else {
             return $this->errFobidden('Вы не можете удалить эту запись');
         }
+    }
+
+    private function isParticipantsLimitEndedUp(int $lessonId): bool
+    {
+        return $this->lessonRepository->isParticipantsLimitEndedUp($lessonId);
     }
 }

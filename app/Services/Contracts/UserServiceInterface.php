@@ -8,6 +8,8 @@ interface UserServiceInterface
 
 	public function show(array $data, int $id);
 
+	public function profile();
+
 	public function update(array $data);
 
 	public function destroy();

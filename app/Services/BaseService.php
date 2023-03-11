@@ -7,8 +7,6 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 
-use function PHPUnit\Framework\isNull;
-
 class BaseService
 {    
     protected User $user;
@@ -20,20 +18,8 @@ class BaseService
      */     
     public function __construct()
     {
-        if (!isNull(auth('api-user')->user())) {
+        if (auth('api-user')->user() != null) {
             $this->user = auth('api-user')->user();
-        }
-    }
-
-    protected function defineUser()
-    {
-        $user = auth()->user();
-
-        if (!isset($user)) {
-            return $this->errFobidden(403, 'Требуется авторизация');
-        }
-        else {
-            $this->user = $user;
         }
     }
 

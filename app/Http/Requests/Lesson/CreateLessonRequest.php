@@ -26,6 +26,8 @@ class CreateLessonRequest extends FormRequest
         return [
             'type_id' => ['required', 'integer', 'exists:types,id'],
             'starts_at' => ['required', 'date_format:Y-m-d H:i'],
+            'continuance' => ['required', 'integer', 'min:1'],
+            'participants_limitation' => ['required', 'integer', 'min:1'],
             'comment' => ['nullable', 'string'],
         ];
     }

@@ -22,11 +22,11 @@ class UserResource extends JsonResource
             'description' => $this->description,
             'photo' => (new FileResource($this->photo)),
 
-            'favorite_affiliate' => $this->favoriteAffiliate,                           // for users
-            'assignments' => AssignmentResource::collection($this->assignments),        // for users
+            'favorite_affiliate' => (new AffiliateResource($this->whenLoaded('favoriteAffiliate'))),                   // for users
+            'assignments' => AssignmentResource::collection($this->whenLoaded('assignments')),      // for users
 
-            'works_in_affiliate' => $this->worksInAffiliate,                            // for instructors
-            'lessons' => LessonResource::collection($this->lessons),                    // for instructors
+            'works_in_affiliate' => (new AffiliateResource($this->whenLoaded('worksInAffiliate'))),                    // for instructors
+            'lessons' => LessonResource::collection($this->whenLoaded('lessons')),                  // for instructors
 
             'fb_token' => $this->fb_token,
             'created_at' => $this->created_at,

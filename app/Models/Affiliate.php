@@ -82,6 +82,7 @@ class Affiliate extends Model
     {
         $lessonsCount = $this->lessons()->count();
         $instructorsCount = $this->instructors()->count();
+
         if ($lessonsCount && $instructorsCount) {
             $loadings = $lessonsCount / $instructorsCount;
         } else {

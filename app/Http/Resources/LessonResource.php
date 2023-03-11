@@ -17,9 +17,12 @@ class LessonResource extends JsonResource
         return [
             'id' => $this->id,
             'type' => (new TypeResource($this->type)),
-            'instructor_id' => $this->instructor_id,
+            'instructor' => new UserResource($this->whenLoaded('instructor')),
             'starts_at' => $this->starts_at,
+            'continuance' => $this->continuance,
+            'participants_limitation' => $this->participants_limitation,
             'comment' => $this->comment,
+            'assignments' => AssignmentResource::collection($this->whenLoaded('assignments')),
         ];
     }
 }

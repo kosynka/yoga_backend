@@ -29,6 +29,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['log']], function () {
             Route::post('/', 'update');
             Route::put('/update-token', 'updateToken');
             Route::delete('/', 'destroy');
+            Route::get('/profile', 'profile');
             Route::get('/{id}', 'show')->withoutMiddleware('auth:api-user');
         });
 

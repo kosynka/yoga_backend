@@ -28,7 +28,13 @@ class AffiliateService extends BaseService implements AffiliateServiceInterface
     {
         $affiliates = $this->repository->all($data);
 
+        $favorite = null;
+        if (isset($this->user)) {
+            $favorite = $this->user->favorite_affiliate_id;
+        }
+
         return $this->result([
+            'favorite_id' => $favorite,
             'affiliate' => AffiliateResource::collection($affiliates),
         ]);
     }

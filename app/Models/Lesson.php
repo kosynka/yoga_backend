@@ -6,6 +6,7 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Lesson extends Model
@@ -17,6 +18,8 @@ class Lesson extends Model
         'type_id',
         'instructor_id',
         'starts_at',
+        'continuance',
+        'participants_limitation',
         'comment',
     ];
 
@@ -34,5 +37,22 @@ class Lesson extends Model
     public function instructor(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function assignments(): HasMany
+    {
+        return $this->hasMany(Assignment::class, 'lesson_id');
+    }
+
+    public function assignmentsAmount()
+    {
+        return $this->assignments()->count();
+    }
+
+    public function isParticipantsLimitEndedUp()
+    {
+        $diff = $this->participants_limitation - $this->assignmentsAmount();
+
+        return true ? $diff > 0 : false;
     }
 }

@@ -68,6 +68,20 @@ class UserController extends ApiController
     }
 
     /**
+     * @OA\Get(
+     *     tags={"users"},
+     *     summary="Show user",
+     *     operationId="showUser",
+     *     path="/api/v1/users/{id}",
+     *     @OA\Response(response="200", description="Показать пользователя по id")
+     * )
+     */
+    public function profile()
+    {
+        return $this->result($this->service->profile());
+    }
+
+    /**
      * @OA\Post(
      *     tags={"users"},
      *     summary="Update user",

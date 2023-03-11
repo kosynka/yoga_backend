@@ -7,8 +7,6 @@ use App\Repositories\Contracts\LessonRepositoryInterface;
 use App\Services\BaseService;
 use App\Services\Contracts\LessonServiceInterface;
 
-use function PHPUnit\Framework\isNull;
-
 class LessonService extends BaseService implements LessonServiceInterface
 {
     private LessonRepositoryInterface $repository;
@@ -29,7 +27,7 @@ class LessonService extends BaseService implements LessonServiceInterface
         $lessons = $this->repository->all($data);
 
         return $this->result([
-            'lesson' => LessonResource::collection($lessons),
+            'lesson' => LessonResource::collection($lessons->load('instructor')),
         ]);
     }
 
@@ -40,7 +38,7 @@ class LessonService extends BaseService implements LessonServiceInterface
         $lesson = $this->repository->store($data);
 
         return $this->result([
-            'lesson' => (new LessonResource($lesson)),
+            'lesson' => (new LessonResource($lesson->load('instructor'))),
         ]);
     }
 
@@ -49,7 +47,7 @@ class LessonService extends BaseService implements LessonServiceInterface
         $lesson = $this->repository->find($id);
 
         return $this->result([
-            'lesson' => (new LessonResource($lesson)),
+            'lesson' => (new LessonResource($lesson->load('instructor'))),
         ]);
     }
 
@@ -65,7 +63,7 @@ class LessonService extends BaseService implements LessonServiceInterface
 
 
         return $this->result([
-            'lesson' => (new LessonResource($lesson)),
+            'lesson' => (new LessonResource($lesson->load('instructor'))),
         ]);
     }
 

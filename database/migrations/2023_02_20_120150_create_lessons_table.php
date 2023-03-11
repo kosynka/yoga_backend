@@ -25,7 +25,8 @@ return new class extends Migration
                 ->constrained('users');
 
             $table->dateTime('starts_at');
-
+            $table->integer('continuance');
+            $table->integer('participants_limitation');
             $table->string('comment')->nullable();
 
             $table->timestamps();

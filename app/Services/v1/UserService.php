@@ -42,6 +42,15 @@ class UserService extends BaseService implements UserServiceInterface
         ]);
     }
 
+    public function profile()
+    {
+        $user = $this->repository->find($this->user->id);
+
+        return $this->result([
+            'user' => (new UserResource($user->load('favoriteAffiliate', 'assignments', 'worksInAffiliate', 'lessons'))),
+        ]);
+    }
+
 	public function update(array $data)
     {
         if (isset($data['photo'])) {

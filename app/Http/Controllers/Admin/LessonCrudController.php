@@ -80,7 +80,7 @@ class LessonCrudController extends CrudController
             'name' => 'instructor',
             'label' => 'Инструктор',
             'type' => 'select',
-            'attribute' => 'name',
+            'attribute' => 'onlyUsers',
         ]);
         $this->crud->addField(['name' => 'starts_at', 'label' => 'Начало занятия']);
         $this->crud->addField(['name' => 'continuance', 'label' => 'Минут']);

@@ -56,8 +56,8 @@ class UserCrudController extends CrudController
         $this->crud->addColumn(['name' => 'description', 'label' => 'Описание']);
         $this->crud->addColumn(['name' => 'phone', 'label' => 'Телефон']);
         // $this->crud->addColumn([
-        //     'name' => 'photo',
         //     'label' => 'Фото',
+        //     'name' => 'photo',
         //     'type' => 'upload',
         //     'upload' => true,
         // ]);
@@ -102,6 +102,12 @@ class UserCrudController extends CrudController
         $this->crud->addField(['name' => 'name', 'label' => 'Имя']);
         $this->crud->addField(['name' => 'description', 'label' => 'Описание']);
         $this->crud->addField(['name' => 'phone', 'label' => 'Телефон']);
+        // $this->crud->addField([
+        //     'name' => 'photo',
+        //     'label' => 'Фото',
+        //     'type' => 'upload',
+        //     'upload' => true,
+        // ]);
         $this->crud->addField([
             'name' => 'favoriteAffiliate',
             'label' => 'Любимый филиал',

@@ -6,11 +6,14 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File as FacadesFile;
 
 class User extends Authenticatable //implements MustVerifyEmail
 {
@@ -39,6 +42,10 @@ class User extends Authenticatable //implements MustVerifyEmail
         'updated_at',
         'deleted_at',
         'remember_token',
+    ];
+
+    protected $appends = [
+        'onlyUsers',
     ];
 
     public function isUser(): bool
@@ -116,5 +123,35 @@ class User extends Authenticatable //implements MustVerifyEmail
         }
 
         return 0;
+    }
+
+    public function onlyUsers(): Attribute
+    {
+        return new Attribute(
+            get: function () {
+                return $this->getRole() . ' | ' . $this->name . ' +7' . $this->phone;
+            },
+        );
+    }
+    
+    public function setPhotoAttribute($value)
+    {
+        $attribute_name = 'photo_id';
+        $disk = "public";
+        $destination_path = "storage";
+
+        if ($value == null) {
+            $this->attributes[$attribute_name] = null;
+        }
+
+        $filePath = time() . $value->getClientOriginalName();
+        Storage::disk('public')->put($filePath, FacadesFile::get($value));
+
+        $data['name'] = $filePath;
+        $data['path'] = 'storage/' . $filePath;
+        $newFile = File::create($data);
+
+        $this->uploadFileToDisk($newFile->id, $attribute_name, $disk, $destination_path, $fileName = null);
+        $this->attributes[$attribute_name] = $newFile->id;
     }
 }

@@ -66,7 +66,12 @@ class AssignmentCrudController extends CrudController
     {
         $this->crud->setValidation(AssignmentRequest::class);
 
-        $this->crud->addField(['name' => 'user', 'label' => 'Пользователь']);
+        $this->crud->addField([
+            'name' => 'user',
+            'label' => 'Пользователь',
+            'type' => 'select',
+            'attribute' => 'onlyUsers',
+        ]);
         $this->crud->addField([
             'name' => 'lesson',
             'label' => 'Урок',

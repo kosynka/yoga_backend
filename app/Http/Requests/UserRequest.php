@@ -30,6 +30,7 @@ class UserRequest extends FormRequest
             'name' => ['required', 'string'],
             'description' => ['nullable', 'string'],
             'phone' => ['required', new Phone],
+            'photo' => ['nullable'],
             'favoriteAffiliate' => ['nullable'],
             'worksInAffiliate' => ['nullable'],
         ];

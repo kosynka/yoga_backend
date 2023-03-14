@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\LessonRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
-use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
  * Class LessonCrudController
@@ -26,9 +25,9 @@ class LessonCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\Lesson::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/lesson');
-        CRUD::setEntityNameStrings('Урок', 'Уроки');
+        $this->crud->setModel(\App\Models\Lesson::class);
+        $this->crud->setRoute(config('backpack.base.route_prefix') . '/lesson');
+        $this->crud->setEntityNameStrings('Урок', 'Уроки');
     }
 
     /**
@@ -39,16 +38,26 @@ class LessonCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::column('type_id');
-        CRUD::column('instructor_id');
-        CRUD::column('starts_at');
-        CRUD::column('comment');
+        $this->crud->setDefaultPageLength(50);
+        $this->crud->orderBy('id');
 
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
-         */
+        $this->crud->addColumn('id');
+        $this->crud->addColumn([
+            'name' => 'type',
+            'label' => 'Тип урока',
+            'type' => 'select',
+            'attribute' => 'name',
+        ]);
+        $this->crud->addColumn([
+            'name' => 'instructor',
+            'label' => 'Инструктор',
+            'type' => 'select',
+            'attribute' => 'name',
+        ]);
+        $this->crud->addColumn(['name' => 'starts_at', 'label' => 'Начало занятия']);
+        $this->crud->addColumn(['name' => 'continuance', 'label' => 'Минут']);
+        $this->crud->addColumn(['name' => 'participants_limitation', 'label' => 'Ограничение кол-ва людей']);
+        $this->crud->addColumn(['name' => 'comment', 'label' => 'Комментарий']);
     }
 
     /**
@@ -59,18 +68,24 @@ class LessonCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(LessonRequest::class);
+        $this->crud->setValidation(LessonRequest::class);
 
-        CRUD::field('type_id');
-        CRUD::field('instructor_id');
-        CRUD::field('starts_at');
-        CRUD::field('comment');
-
-        /**
-         * Fields can be defined using the fluent syntax or array syntax:
-         * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
-         */
+        $this->crud->addField([
+            'name' => 'type',
+            'label' => 'Тип урока',
+            'type' => 'select',
+            'attribute' => 'name',
+        ]);
+        $this->crud->addField([
+            'name' => 'instructor',
+            'label' => 'Инструктор',
+            'type' => 'select',
+            'attribute' => 'name',
+        ]);
+        $this->crud->addField(['name' => 'starts_at', 'label' => 'Начало занятия']);
+        $this->crud->addField(['name' => 'continuance', 'label' => 'Минут']);
+        $this->crud->addField(['name' => 'participants_limitation', 'label' => 'Ограничение кол-ва людей']);
+        $this->crud->addField(['name' => 'comment', 'label' => 'Комментарий']);
     }
 
     /**
@@ -82,5 +97,10 @@ class LessonCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    protected function setupShowOperation()
+    {
+        $this->setupListOperation();
     }
 }

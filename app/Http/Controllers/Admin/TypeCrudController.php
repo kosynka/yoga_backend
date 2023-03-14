@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\TypeRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
-use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
  * Class TypeCrudController
@@ -26,9 +25,9 @@ class TypeCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\Type::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/type');
-        CRUD::setEntityNameStrings('Тип урока', 'Типы уроков');
+        $this->crud->setModel(\App\Models\Type::class);
+        $this->crud->setRoute(config('backpack.base.route_prefix') . '/type');
+        $this->crud->setEntityNameStrings('Тип урока', 'Типы уроков');
     }
 
     /**
@@ -39,15 +38,13 @@ class TypeCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::column('name');
-        CRUD::column('description');
-        CRUD::column('created_at');
+        $this->crud->setDefaultPageLength(50);
+        $this->crud->orderBy('id');
 
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
-         */
+        $this->crud->addColumn('id');
+        $this->crud->addColumn(['name' => 'name', 'label' => 'Название']);
+        $this->crud->addColumn(['name' => 'description', 'label' => 'Описание']);
+        $this->crud->addColumn(['name' => 'created_at', 'label' => 'Создан']);
     }
 
     /**
@@ -58,16 +55,10 @@ class TypeCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(TypeRequest::class);
+        $this->crud->setValidation(TypeRequest::class);
 
-        CRUD::field('name');
-        CRUD::field('description');
-
-        /**
-         * Fields can be defined using the fluent syntax or array syntax:
-         * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
-         */
+        $this->crud->addField(['name' => 'name', 'label' => 'Название']);
+        $this->crud->addField(['name' => 'description', 'label' => 'Описание']);
     }
 
     /**
@@ -79,5 +70,10 @@ class TypeCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    protected function setupShowOperation()
+    {
+        $this->setupListOperation();
     }
 }

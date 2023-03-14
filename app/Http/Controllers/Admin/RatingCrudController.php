@@ -26,9 +26,9 @@ class RatingCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\Rating::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/rating');
-        CRUD::setEntityNameStrings('rating', 'ratings');
+        $this->crud->setModel(\App\Models\Rating::class);
+        $this->crud->setRoute(config('backpack.base.route_prefix') . '/rating');
+        $this->crud->setEntityNameStrings('rating', 'ratings');
     }
 
     /**
@@ -59,7 +59,7 @@ class RatingCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(RatingRequest::class);
+        $this->crud->setValidation(RatingRequest::class);
 
         CRUD::field('user_id');
         CRUD::field('instructor_id');

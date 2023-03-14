@@ -39,6 +39,6 @@ class Phone implements Rule
      */
     public function message()
     {
-        return 'Необходимо ввести номер в формате 700 123 4567';
+        return 'Необходимо ввести номер в формате 7ХХ ХХХ ХХХХ';
     }
 }

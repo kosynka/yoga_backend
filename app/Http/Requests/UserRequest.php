@@ -28,7 +28,10 @@ class UserRequest extends FormRequest
         return [
             'role' => ['required', 'string'],
             'name' => ['required', 'string'],
+            'description' => ['nullable', 'string'],
             'phone' => ['required', new Phone],
+            'favoriteAffiliate' => ['nullable'],
+            'worksInAffiliate' => ['nullable'],
         ];
     }
 
@@ -52,7 +55,9 @@ class UserRequest extends FormRequest
     public function messages()
     {
         return [
-            //
+            'role.required' => 'Выберите Роль пользователя',
+            'name.required' => 'Заполните поле Имя',
+            'phone.required' => 'Заполните поле Телефон',
         ];
     }
 }

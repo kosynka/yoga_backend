@@ -26,9 +26,9 @@ class FileCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\File::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/file');
-        CRUD::setEntityNameStrings('file', 'files');
+        $this->crud->setModel(\App\Models\File::class);
+        $this->crud->setRoute(config('backpack.base.route_prefix') . '/file');
+        $this->crud->setEntityNameStrings('file', 'files');
     }
 
     /**

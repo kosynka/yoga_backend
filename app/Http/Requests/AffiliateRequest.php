@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\Phone;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AffiliateRequest extends FormRequest
@@ -25,7 +26,12 @@ class AffiliateRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'name' => ['required', 'string', 'min:1'],
+            'phone' => ['required', new Phone],
+            'description' => ['required', 'string', 'min:1'],
+            'link' => ['required', 'string', 'min:1'],
+            // 'image' => ['required'],
+            'city' => ['required'],
         ];
     }
 
@@ -49,7 +55,12 @@ class AffiliateRequest extends FormRequest
     public function messages()
     {
         return [
-            //
+            'name.required' => 'Заполните поле Название',
+            'phone.required' => 'Заполните поле Телефон',
+            'description.required' => 'Заполните поле Описание',
+            'link.required' => 'Заполните поле Ссылка',
+            'image.required' => 'Прикрепите изображение',
+            'city.required' => 'Выберите Город',
         ];
     }
 }

@@ -25,7 +25,12 @@ class LessonRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'type' => ['required'],
+            'instructor' => ['required'],
+            'starts_at' => ['required'],
+            'continuance' => ['required', 'integer', 'min:1'],
+            'participants_limitation' => ['required', 'integer', 'min:1'],
+            'comment' => ['nullable', 'string', 'min:1'],
         ];
     }
 
@@ -49,7 +54,11 @@ class LessonRequest extends FormRequest
     public function messages()
     {
         return [
-            //
+            'type.required' => 'Выберите Тип урока',
+            'instructor.required' => 'Выберите Инструктора',
+            'starts_at.required' => 'Заполните поле Начало занятия',
+            'continuance.required' => 'Заполните поле Продолжительности занятия',
+            'participants_limitation.required' => 'Заполните поле Ограничения количества людей',
         ];
     }
 }

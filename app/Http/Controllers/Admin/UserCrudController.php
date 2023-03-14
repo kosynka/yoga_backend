@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\UserRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
-use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
  * Class UserCrudController
@@ -26,9 +25,9 @@ class UserCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\User::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/user');
-        CRUD::setEntityNameStrings('Пользователя', 'Пользователи');
+        $this->crud->setModel(\App\Models\User::class);
+        $this->crud->setRoute(config('backpack.base.route_prefix') . '/user');
+        $this->crud->setEntityNameStrings('Пользователя', 'Пользователи');
     }
 
     /**
@@ -42,21 +41,42 @@ class UserCrudController extends CrudController
         $this->crud->setDefaultPageLength(50);
         $this->crud->orderBy('id');
 
-        CRUD::column('id');
-        CRUD::column('role')->label('Роль')->type('enum')->options(
-            [
+        $this->crud->addColumn('id');
+        $this->crud->addColumn([
+            'name' => 'role',
+            'label' => 'Роль',
+            'type' => 'enum',
+            'options' => [
                 'ADMIN' => 'Админ',
                 'INSTRUCTOR' => 'Инструктор',
                 'USER' => 'Пользователь',
-            ]
-        );
-        CRUD::column('name')->label('Имя');
-        CRUD::column('phone')->label('Телефон');
-        CRUD::column('photo')->label('Фото')->type('image')->prefix('storage/')->height('60px')->width('60px');
-        CRUD::column('favoriteAffiliate')->label('Любимый филиал');
-        CRUD::column('assignments')->label('Записи');
-        CRUD::column('worksInAffiliate')->label('Работат в филиале');
-        CRUD::column('lessons')->label('Созданные уроки');
+            ],
+        ]);
+        $this->crud->addColumn(['name' => 'name', 'label' => 'Имя']);
+        $this->crud->addColumn(['name' => 'description', 'label' => 'Описание']);
+        $this->crud->addColumn(['name' => 'phone', 'label' => 'Телефон']);
+        // $this->crud->addColumn([
+        //     'name' => 'photo',
+        //     'label' => 'Фото',
+        //     'type' => 'upload',
+        //     'upload' => true,
+        // ]);
+        $this->crud->addColumn([
+            'name' => 'favoriteAffiliate',
+            'label' => 'Любимый филиал',
+            'type' => 'select',
+            'entity' => 'favoriteAffiliate',
+            'model' => '\App\Models\Affiliate::class',
+            'attribute' => 'name',
+        ]);
+        $this->crud->addColumn([
+            'name' => 'worksInAffiliate',
+            'label' => 'Работает в филиале',
+            'type' => 'select',
+            'entity' => 'worksInAffiliate',
+            'model' => '\App\Models\Affiliate::class',
+            'attribute' => 'name',
+        ]);
     }
 
     /**
@@ -67,17 +87,35 @@ class UserCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(UserRequest::class);
+        $this->crud->setValidation(UserRequest::class);
 
-        CRUD::field('role')->label('Роль')->type('enum')->options(
-            [
+        $this->crud->addField([
+            'name' => 'role',
+            'label' => 'Роль',
+            'type' => 'enum',
+            'options' => [
                 'ADMIN' => 'Админ',
                 'INSTRUCTOR' => 'Инструктор',
                 'USER' => 'Пользователь',
-            ]
-        );
-        CRUD::field('name')->label('Имя');
-        CRUD::field('phone')->label('Телефон');
+            ],
+        ]);
+        $this->crud->addField(['name' => 'name', 'label' => 'Имя']);
+        $this->crud->addField(['name' => 'description', 'label' => 'Описание']);
+        $this->crud->addField(['name' => 'phone', 'label' => 'Телефон']);
+        $this->crud->addField([
+            'name' => 'favoriteAffiliate',
+            'label' => 'Любимый филиал',
+            'type' => 'select',
+            'entity' => 'favoriteAffiliate',
+            'attribute' => 'name',
+        ]);
+        $this->crud->addField([
+            'name' => 'worksInAffiliate',
+            'label' => 'Работает в филиале',
+            'type' => 'select',
+            'entity' => 'worksInAffiliate',
+            'attribute' => 'name',
+        ]);
     }
 
     /**
@@ -89,5 +127,12 @@ class UserCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    protected function setupShowOperation()
+    {
+        $this->setupListOperation();
+
+        $this->crud->addColumn(['name' => 'created_at', 'label' => 'Зарегистрировался']);
     }
 }

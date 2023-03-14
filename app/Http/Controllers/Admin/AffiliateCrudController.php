@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\AffiliateRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
-use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
  * Class AffiliateCrudController
@@ -26,9 +25,9 @@ class AffiliateCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\Affiliate::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/affiliate');
-        CRUD::setEntityNameStrings('Филиал', 'Филиалы');
+        $this->crud->setModel(\App\Models\Affiliate::class);
+        $this->crud->setRoute(config('backpack.base.route_prefix') . '/affiliate');
+        $this->crud->setEntityNameStrings('Филиал', 'Филиалы');
     }
 
     /**
@@ -42,19 +41,12 @@ class AffiliateCrudController extends CrudController
         $this->crud->setDefaultPageLength(50);
         $this->crud->orderBy('id');
 
-        CRUD::column('id');
-        CRUD::column('name')->label('Название');
-        CRUD::column('description')->label('Описание');
-        CRUD::column('address')->label('Адрес');
-        CRUD::column('image')->label('Фото');
-        CRUD::column('city')->label('Город');
-        CRUD::column('master')->label('Администратор');
-
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
-         */
+        $this->crud->addColumn('id');
+        $this->crud->addColumn(['name' => 'name', 'label' => 'Название']);
+        $this->crud->addColumn(['name' => 'phone', 'label' => 'Телефон']);
+        $this->crud->addColumn(['name' => 'description', 'label' => 'Описание']);
+        $this->crud->addColumn(['name' => 'link', 'label' => 'Ссылка']);
+        $this->crud->addColumn(['name' => 'city', 'label' => 'Город']);
     }
 
     /**
@@ -65,20 +57,13 @@ class AffiliateCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(AffiliateRequest::class);
+        $this->crud->setValidation(AffiliateRequest::class);
 
-        CRUD::field('name');
-        CRUD::field('description');
-        CRUD::field('address');
-        CRUD::field('image');
-        CRUD::field('city');
-        CRUD::field('master');
-
-        /**
-         * Fields can be defined using the fluent syntax or array syntax:
-         * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
-         */
+        $this->crud->addField(['name' => 'name', 'label' => 'Название']);
+        $this->crud->addField(['name' => 'phone', 'label' => 'Телефон']);
+        $this->crud->addField(['name' => 'description', 'label' => 'Описание']);
+        $this->crud->addField(['name' => 'link', 'label' => 'Ссылка']);
+        $this->crud->addField(['name' => 'city', 'label' => 'Город']);
     }
 
     /**
@@ -90,5 +75,12 @@ class AffiliateCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    protected function setupShowOperation()
+    {
+        $this->setupListOperation();
+
+        $this->crud->addColumn(['name' => 'created_at', 'label' => 'Создан']);
     }
 }

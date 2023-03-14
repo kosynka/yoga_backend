@@ -5,10 +5,9 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
-use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Lesson extends Model
@@ -29,6 +28,10 @@ class Lesson extends Model
         'created_at',
         'updated_at',
         'deleted_at',
+    ];
+
+    protected $appends = [
+        'attributes',
     ];
 
     public function type(): BelongsTo
@@ -56,5 +59,12 @@ class Lesson extends Model
         $diff = $this->participants_limitation - $this->assignmentsAmount();
 
         return true ? $diff > 0 : false;
+    }
+
+    public function attributes(): Attribute
+    {
+        return new Attribute(
+            get: fn () => $this->type->name . ' ' . $this->instructor->name . ' ' . $this->starts_at,
+        );
     }
 }

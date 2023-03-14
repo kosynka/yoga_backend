@@ -51,7 +51,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'role' => 'INSTRUCTOR',
-                'name' => 'Тестовый инструктор 707 865 0366',
+                'name' => 'Тест.инст7078650366',
                 'phone' => '707 865 0366',
                 'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod sagittis nisi vel facilisis.',
                 'works_in_affiliate_id' => 1,
@@ -61,7 +61,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'role' => 'INSTRUCTOR',
-                'name' => 'Тестовый инструктор 700 100 2001',
+                'name' => 'Тест.инст7001002001',
                 'phone' => '700 100 2001',
                 'works_in_affiliate_id' => 1,
                 // 'email' => 'sayat.kaldarbek@gmail.com',
@@ -70,7 +70,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'role' => 'INSTRUCTOR',
-                'name' => 'Тестовый инструктор 700 100 2002',
+                'name' => 'Тест.инст7001002002',
                 'phone' => '700 100 2002',
                 'description' => 'Vestibulum placerat in urna id congue. Donec et scelerisque urna. Sed mattis pellentesque turpis. Donec consectetur viverra felis, id venenatis enim ultrices sed.',
                 'works_in_affiliate_id' => 2,
@@ -80,7 +80,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'role' => 'INSTRUCTOR',
-                'name' => 'Тестовый инструктор 700 100 2003',
+                'name' => 'Тест.инст7001002003',
                 'phone' => '700 100 2003',
                 'works_in_affiliate_id' => 3,
                 // 'email' => 'sayat.kaldarbek@gmail.com',
@@ -89,7 +89,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'role' => 'USER',
-                'name' => 'Тестовый пользователь 702 236 3206',
+                'name' => 'Тест.польз7022363206',
                 'phone' => '702 236 3206',
                 'favorite_affiliate_id' => 1,
                 // 'email' => 'sayat.kaldarbekov.00@gmail.com',
@@ -98,7 +98,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'role' => 'USER',
-                'name' => 'Тестовый пользователь 707 405 4407',
+                'name' => 'Тест.польз7074054407',
                 'phone' => '707 405 4407',
                 // 'email' => 'dastan.dastan@gmail.com',
                 // 'password' => Hash::make('123'),

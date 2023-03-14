@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\CityRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
-use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
  * Class CityCrudController
@@ -26,9 +25,9 @@ class CityCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\City::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/city');
-        CRUD::setEntityNameStrings('Город', 'Города');
+        $this->crud->setModel(\App\Models\City::class);
+        $this->crud->setRoute(config('backpack.base.route_prefix') . '/city');
+        $this->crud->setEntityNameStrings('Город', 'Города');
     }
 
     /**
@@ -42,8 +41,9 @@ class CityCrudController extends CrudController
         $this->crud->setDefaultPageLength(50);
         $this->crud->orderBy('id');
 
-        CRUD::column('id');
-        CRUD::column('name')->label('Название');
+        $this->crud->addColumn('id');
+        $this->crud->addColumn(['name' => 'name', 'label' => 'Название']);
+        $this->crud->addColumn(['name' => 'created_at', 'label' => 'Создан']);
     }
 
     /**
@@ -54,9 +54,9 @@ class CityCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(CityRequest::class);
+        $this->crud->setValidation(CityRequest::class);
 
-        CRUD::field('name')->label('Название');
+        $this->crud->addField(['name' => 'name', 'label' => 'Название']);
     }
 
     /**
@@ -68,5 +68,12 @@ class CityCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    protected function setupShowOperation()
+    {
+        $this->crud->addField('id');
+
+        $this->setupListOperation();
     }
 }

@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File as FacadesFile;
 
 class Affiliate extends Model
 {
@@ -91,5 +93,25 @@ class Affiliate extends Model
         }
 
         return $loadings;
+    }
+
+    public function setImageAttribute($value)
+    {
+        $attribute_name = 'image_id';
+
+        if ($value == null) {
+            $this->attributes[$attribute_name] = null;
+        }
+
+        $filePath = time() . $value->getClientOriginalName();
+
+        Storage::disk('public')->put($filePath, FacadesFile::get($value));
+
+        $data['name'] = $filePath;
+        $data['path'] = 'storage/' . $filePath;
+
+        $newFile = File::create($data);
+
+        return $this->attributes[$attribute_name] = $newFile->id;
     }
 }

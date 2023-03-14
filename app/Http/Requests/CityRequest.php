@@ -49,7 +49,7 @@ class CityRequest extends FormRequest
     public function messages()
     {
         return [
-            //
+            'name.required' => 'Заполните поле Название',
         ];
     }
 }

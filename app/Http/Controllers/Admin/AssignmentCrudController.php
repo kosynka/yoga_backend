@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\AssignmentRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
-use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
  * Class AssignmentCrudController
@@ -26,9 +25,9 @@ class AssignmentCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\Assignment::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/assignment');
-        CRUD::setEntityNameStrings('Запись', 'Записи');
+        $this->crud->setModel(\App\Models\Assignment::class);
+        $this->crud->setRoute(config('backpack.base.route_prefix') . '/assignment');
+        $this->crud->setEntityNameStrings('Запись', 'Записи');
     }
 
     /**
@@ -39,14 +38,22 @@ class AssignmentCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::column('user_id');
-        CRUD::column('lesson_id');
+        $this->crud->setDefaultPageLength(50);
+        $this->crud->orderBy('id');
 
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
-         */
+        $this->crud->addColumn('id');
+        $this->crud->addColumn([
+            'name' => 'user',
+            'label' => 'Пользователь',
+            'type' => 'select',
+            'attribute' => 'name',
+        ]);
+        $this->crud->addColumn([
+            'name' => 'lesson',
+            'label' => 'Урок',
+            'type' => 'select',
+            'attribute' => 'attributes',
+        ]);
     }
 
     /**
@@ -57,16 +64,15 @@ class AssignmentCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(AssignmentRequest::class);
+        $this->crud->setValidation(AssignmentRequest::class);
 
-        CRUD::field('user_id');
-        CRUD::field('lesson_id');
-
-        /**
-         * Fields can be defined using the fluent syntax or array syntax:
-         * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
-         */
+        $this->crud->addField(['name' => 'user', 'label' => 'Пользователь']);
+        $this->crud->addField([
+            'name' => 'lesson',
+            'label' => 'Урок',
+            'type' => 'select',
+            'attribute' => 'attributes',
+        ]);
     }
 
     /**
@@ -78,5 +84,10 @@ class AssignmentCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    protected function setupShowOperation()
+    {
+        $this->setupListOperation();
     }
 }

@@ -25,7 +25,8 @@ class TypeRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
+            'name' => ['required', 'string', 'min:1'],
+            'description' => ['nullable', 'string', 'min:1'],
         ];
     }
 
@@ -49,7 +50,7 @@ class TypeRequest extends FormRequest
     public function messages()
     {
         return [
-            //
+            'name.required' => 'Заполните поле Название',
         ];
     }
 }

@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\FeedbackRequest;
+use App\Http\Requests\AddressRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
-use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class FeedbackCrudController
+ * Class AddressCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class FeedbackCrudController extends CrudController
+class AddressCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -26,9 +25,9 @@ class FeedbackCrudController extends CrudController
      */
     public function setup()
     {
-        $this->crud->setModel(\App\Models\Feedback::class);
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/feedback');
-        $this->crud->setEntityNameStrings('feedback', 'feedback');
+        $this->crud->setModel(\App\Models\Address::class);
+        $this->crud->setRoute(config('backpack.base.route_prefix') . '/address');
+        $this->crud->setEntityNameStrings('Адрес', 'Адреса');
     }
 
     /**
@@ -39,15 +38,17 @@ class FeedbackCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::column('user_id');
-        CRUD::column('title');
-        CRUD::column('message');
+        $this->crud->setDefaultPageLength(50);
+        $this->crud->orderBy('id');
 
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
-         */
+        $this->crud->addColumn('id');
+        $this->crud->addColumn(['name' => 'name', 'label' => 'Название']);
+        $this->crud->addColumn([
+            'name' => 'affiliate',
+            'label' => 'Филиал',
+            'type' => 'select',
+            'attribute' => 'name',
+        ]);
     }
 
     /**
@@ -58,17 +59,15 @@ class FeedbackCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        $this->crud->setValidation(FeedbackRequest::class);
+        $this->crud->setValidation(AddressRequest::class);
 
-        CRUD::field('user_id');
-        CRUD::field('title');
-        CRUD::field('message');
-
-        /**
-         * Fields can be defined using the fluent syntax or array syntax:
-         * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
-         */
+        $this->crud->addField(['name' => 'name', 'label' => 'Название']);
+        $this->crud->addField([
+            'name' => 'affiliate',
+            'label' => 'Филиал',
+            'type' => 'select',
+            'attribute' => 'name',
+        ]);
     }
 
     /**
@@ -80,5 +79,10 @@ class FeedbackCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    protected function setupShowOperation()
+    {
+        $this->setupListOperation();
     }
 }

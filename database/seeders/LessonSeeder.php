@@ -18,7 +18,7 @@ class LessonSeeder extends Seeder
         $data = [
             [
                 'type_id' => 1,
-                'instructor_id' => 5,
+                'instructor_id' => 2,
                 'starts_at' => '2023-03-17 14:00',
                 'continuance' => 50,
                 'participants_limitation' => 10,
@@ -26,14 +26,14 @@ class LessonSeeder extends Seeder
             ],
             [
                 'type_id' => 1,
-                'instructor_id' => 5,
+                'instructor_id' => 2,
                 'starts_at' => '2023-03-17 15:00',
                 'continuance' => 50,
                 'participants_limitation' => 10,
             ],
             [
                 'type_id' => 1,
-                'instructor_id' => 5,
+                'instructor_id' => 2,
                 'starts_at' => '2023-03-17 16:00',
                 'continuance' => 50,
                 'participants_limitation' => 10,
@@ -42,7 +42,7 @@ class LessonSeeder extends Seeder
 
             [
                 'type_id' => 2,
-                'instructor_id' => 6,
+                'instructor_id' => 3,
                 'starts_at' => '2023-03-15 16:00',
                 'continuance' => 50,
                 'participants_limitation' => 10,
@@ -50,7 +50,7 @@ class LessonSeeder extends Seeder
             ],
             [
                 'type_id' => 2,
-                'instructor_id' => 6,
+                'instructor_id' => 3,
                 'starts_at' => '2023-03-15 17:00',
                 'continuance' => 50,
                 'participants_limitation' => 10,
@@ -59,28 +59,28 @@ class LessonSeeder extends Seeder
 
             [
                 'type_id' => 3,
-                'instructor_id' => 7,
+                'instructor_id' => 4,
                 'starts_at' => '2023-03-15 12:00',
                 'continuance' => 50,
                 'participants_limitation' => 10,
             ],
             [
-                'type_id' => 3,
-                'instructor_id' => 7,
+                'type_id' => 4,
+                'instructor_id' => 4,
                 'starts_at' => '2023-03-15 13:00',
                 'continuance' => 50,
                 'participants_limitation' => 10,
             ],
             [
-                'type_id' => 3,
-                'instructor_id' => 7,
+                'type_id' => 4,
+                'instructor_id' => 4,
                 'starts_at' => '2023-03-15 18:00',
                 'continuance' => 50,
                 'participants_limitation' => 10,
             ],
             [
                 'type_id' => 3,
-                'instructor_id' => 7,
+                'instructor_id' => 4,
                 'starts_at' => '2023-03-11 19:00',
                 'continuance' => 50,
                 'participants_limitation' => 10,
@@ -89,7 +89,7 @@ class LessonSeeder extends Seeder
 
             [
                 'type_id' => 1,
-                'instructor_id' => 8,
+                'instructor_id' => 5,
                 'starts_at' => '2023-03-10 20:00',
                 'continuance' => 50,
                 'participants_limitation' => 10,

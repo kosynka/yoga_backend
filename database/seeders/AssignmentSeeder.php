@@ -17,21 +17,21 @@ class AssignmentSeeder extends Seeder
     {
         $data = [
             [
-                'user_id' => 9,
+                'user_id' => 6,
                 'lesson_id' => 1,
             ],
             [
-                'user_id' => 9,
+                'user_id' => 6,
                 'lesson_id' => 2,
             ],
             [
-                'user_id' => 9,
+                'user_id' => 6,
                 'lesson_id' => 3,
             ],
 
 
             [
-                'user_id' => 10,
+                'user_id' => 7,
                 'lesson_id' => 5,
             ],
         ];

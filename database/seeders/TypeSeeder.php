@@ -17,16 +17,24 @@ class TypeSeeder extends Seeder
     {
         $data = [
             [
-                'name' => 'Test Yogaland',
-                'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod sagittis nisi vel facilisis. Pellentesque id feugiat nisl, vel finibus justo. Integer semper nec ipsum ut malesuada. Donec vel dictum sem. Vestibulum in nunc nec dolor imperdiet laoreet efficitur quis diam. Cras lobortis mollis nunc sit amet blandit. Etiam quis vehicula leo, eu mollis ipsum. Donec dignissim libero eget tincidunt tristique. Nunc nisl odio, gravida at est eu, tempus elementum libero. Etiam urna nunc, blandit sit amet neque et, ornare bibendum dolor. Nam volutpat metus non mattis ullamcorper. Maecenas auctor justo a diam aliquam, ac sodales nisl gravida.',
+                'name' => 'Хатха',
+                'description' => 'Это разновидность практик, которые объединяют асаны, дыхательные упражнения и концентрацию внимания',
             ],
             [
-                'name' => 'Test Йога и агоЙ',
-                'description' => 'Vestibulum placerat in urna id congue. Donec et scelerisque urna. Sed mattis pellentesque turpis. Donec consectetur viverra felis, id venenatis enim ultrices sed. Etiam quis arcu eu nulla convallis aliquam scelerisque quis lorem. Duis euismod libero ac accumsan accumsan. Proin et porta massa. Praesent elementum diam sit amet massa commodo vestibulum. In pretium neque nunc, quis convallis ex efficitur pretium. Cras hendrerit ipsum vitae sapien vestibulum mollis. Proin luctus eros nec felis ornare, ac dapibus metus ornare. Phasellus eleifend venenatis mattis. Morbi porttitor rhoncus metus. Aenean nec felis nisi.',
+                'name' => 'Антигравити йога',
+                'description' => 'В гамаке можно спрятаться от окружающего мира, словно в коконе, можно выполнять классические и перевернутые асаны без нагрузки на позвоночник, а можно использовать прочную ткань, чтобы отжиматься, качать пресс и глубокие мышцы.',
             ],
             [
-                'name' => 'Test Ноги вверх',
-                'description' => 'Quisque posuere suscipit malesuada. Morbi semper euismod venenatis. Vivamus fringilla lorem tempus, fermentum tortor vitae, tempor lacus',
+                'name' => 'Аштанга-виньяса',
+                'description' => 'Аштанга-виньяса является динамической практикой йоги, которая включает в себя последовательности асан, связанных между собой комплексами движений (виньясами) и выполняемых совместно с пранаямой, бандхами и дришти. Во время выполнения практики сохраняется дхьяна.',
+            ],
+            [
+                'name' => 'Инь-йога',
+                'description' => 'это упражнения, выполняемые в медленном темпе, с различными позами, удерживаемыми дольше, чем в обычной йоге',
+            ],
+            [
+                'name' => 'Бикрам',
+                'description' => 'Бикрам-йога, больше известная как горячая, пришла к нам, так же как и традиционная версия, из Индии',
             ],
         ];
 

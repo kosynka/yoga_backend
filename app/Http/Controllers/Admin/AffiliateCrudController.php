@@ -47,6 +47,13 @@ class AffiliateCrudController extends CrudController
         $this->crud->addColumn(['name' => 'description', 'label' => 'Описание']);
         $this->crud->addColumn(['name' => 'link', 'label' => 'Ссылка']);
         $this->crud->addColumn(['name' => 'city', 'label' => 'Город']);
+        $this->crud->addColumn([
+            'label' => 'Изображение',
+            'name' => 'image',
+            'type' => 'view',
+            'view' => 'partials/image',
+            'upload' => true,
+        ]);
     }
 
     /**
@@ -64,6 +71,12 @@ class AffiliateCrudController extends CrudController
         $this->crud->addField(['name' => 'description', 'label' => 'Описание']);
         $this->crud->addField(['name' => 'link', 'label' => 'Ссылка']);
         $this->crud->addField(['name' => 'city', 'label' => 'Город']);
+        $this->crud->addField([
+            'name' => 'image',
+            'label' => 'Изображение',
+            'type' => 'upload',
+            'upload' => true,
+        ]);
     }
 
     /**

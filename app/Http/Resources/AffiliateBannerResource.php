@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class FileResource extends JsonResource
+class AffiliateBannerResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,8 +16,7 @@ class FileResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'path' => url($this->path),
+            'image' => url('storage/' . $this->image),
         ];
     }
 }

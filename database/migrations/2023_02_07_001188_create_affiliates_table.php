@@ -20,10 +20,7 @@ return new class extends Migration
             $table->longText('description')->nullable();
             $table->string('link')->nullable();
 
-            $table->foreignId('image_id')
-                ->nullable()
-                ->constrained('files')
-                ->cascadeOnUpdate();
+            $table->string('image')->nullable();
 
             $table->foreignId('city_id')
                 ->nullable()

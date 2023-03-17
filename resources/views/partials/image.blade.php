@@ -1,5 +1,5 @@
 @if (isset($entry->image))
-   <img src="/{{ storage_path($entry->image->path) }}" height="120" alt="{{ $entry->image->name }}" />
+   <img src="{{ url('storage/' . $entry->image) }}" height="120" />
 @else
    нет
 @endif

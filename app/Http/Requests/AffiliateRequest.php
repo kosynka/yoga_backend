@@ -29,8 +29,8 @@ class AffiliateRequest extends FormRequest
             'name' => ['required', 'string', 'min:1'],
             'phone' => ['required', new Phone],
             'description' => ['required', 'string', 'min:1'],
-            'link' => ['required', 'string', 'min:1'],
-            // 'image' => ['required'],
+            'link' => ['nullable', 'string', 'min:1'],
+            'image' => ['nullable', 'file'],
             'city' => ['required'],
         ];
     }
@@ -58,8 +58,6 @@ class AffiliateRequest extends FormRequest
             'name.required' => 'Заполните поле Название',
             'phone.required' => 'Заполните поле Телефон',
             'description.required' => 'Заполните поле Описание',
-            'link.required' => 'Заполните поле Ссылка',
-            'image.required' => 'Прикрепите изображение',
             'city.required' => 'Выберите Город',
         ];
     }

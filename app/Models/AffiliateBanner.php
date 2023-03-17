@@ -14,7 +14,7 @@ class AffiliateBanner extends Model
     protected $fillable = [
         'id',
         'affiliate_id',
-        'image_id',
+        'image',
     ];
 
     protected $hidden = [
@@ -27,8 +27,14 @@ class AffiliateBanner extends Model
         return $this->belongsTo(Affiliate::class, 'affiliate_id', 'id');
     }
 
-    public function image(): BelongsTo
+    public function setImageAttribute($value)
     {
-        return $this->belongsTo(File::class, 'image_id', 'id');
+        $attribute_name = "image";
+        $disk = "public";
+        $destination_path = "";
+
+        $fileName = time() . $value->getClientOriginalName();
+
+        $this->uploadFileToDisk($value, $attribute_name, $disk, $destination_path, $fileName);
     }
 }

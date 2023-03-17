@@ -27,7 +27,7 @@ class AffiliateBannerCrudController extends CrudController
     {
         $this->crud->setModel(\App\Models\AffiliateBanner::class);
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/affiliate-banner');
-        $this->crud->setEntityNameStrings('affiliate banner', 'affiliate banners');
+        $this->crud->setEntityNameStrings('Баннер филиала', 'Баннеры филиалов');
     }
 
     /**
@@ -47,6 +47,13 @@ class AffiliateBannerCrudController extends CrudController
             'label' => 'Филиал',
             'type' => 'select',
             'attribute' => 'name',
+        ]);
+        $this->crud->addColumn([
+            'label' => 'Изображение',
+            'name' => 'image',
+            'type' => 'view',
+            'view' => 'partials/image',
+            'upload' => true,
         ]);
     }
 
@@ -69,8 +76,8 @@ class AffiliateBannerCrudController extends CrudController
         $this->crud->addField([
             'name' => 'image',
             'label' => 'Изображение',
-            'type' => 'select',
-            'attribute' => 'path',
+            'type' => 'upload',
+            'upload' => true,
         ]);
     }
 

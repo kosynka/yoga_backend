@@ -27,10 +27,10 @@ class File extends Model
         return $this->hasMany(User::class);
     }
 
-    public function affiliates(): HasMany
-    {
-        return $this->hasMany(Affiliate::class, 'image_id');
-    }
+    // public function affiliates(): HasMany
+    // {
+    //     return $this->hasMany(Affiliate::class, 'image_id');
+    // }
 
     public function banners(): HasMany
     {

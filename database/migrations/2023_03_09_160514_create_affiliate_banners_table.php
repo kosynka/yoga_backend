@@ -16,13 +16,11 @@ return new class extends Migration
         Schema::create('affiliate_banners', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('image_id')
-                ->nullable()
-                ->constrained('files');
-
             $table->foreignId('affiliate_id')
                 ->nullable()
                 ->constrained('affiliates');
+
+            $table->string('image')->nullable();
 
             $table->timestamps();
         });

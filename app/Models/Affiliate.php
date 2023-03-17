@@ -9,8 +9,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\File as FacadesFile;
 
 class Affiliate extends Model
 {
@@ -22,7 +20,7 @@ class Affiliate extends Model
         'phone',
         'description',
         'link',
-        'image_id',
+        'image',
         'city_id',
     ];
 
@@ -32,10 +30,10 @@ class Affiliate extends Model
         'deleted_at',
     ];
 
-    public function image(): BelongsTo
-    {
-        return $this->belongsTo(File::class);
-    }
+    // public function image(): BelongsTo
+    // {
+    //     return $this->belongsTo(File::class);
+    // }
 
     public function city(): BelongsTo
     {
@@ -57,16 +55,9 @@ class Affiliate extends Model
         return $this->hasMany(Address::class);
     }
 
-    public function bannersImages(): HasManyThrough
+    public function bannersImages(): HasMany
     {
-        return $this->hasManyThrough(
-            File::class,
-            AffiliateBanner::class,
-            'affiliate_id',
-            'id',
-            'id',
-            'image_id',
-        );
+        return $this->hasMany(AffiliateBanner::class, 'affiliate_id');
     }
 
     public function lessons(): HasManyThrough
@@ -97,21 +88,12 @@ class Affiliate extends Model
 
     public function setImageAttribute($value)
     {
-        $attribute_name = 'image_id';
+        $attribute_name = "image";
+        $disk = "public";
+        $destination_path = "";
 
-        if ($value == null) {
-            $this->attributes[$attribute_name] = null;
-        }
+        $fileName = time() . $value->getClientOriginalName();
 
-        $filePath = time() . $value->getClientOriginalName();
-
-        Storage::disk('public')->put($filePath, FacadesFile::get($value));
-
-        $data['name'] = $filePath;
-        $data['path'] = 'storage/' . $filePath;
-
-        $newFile = File::create($data);
-
-        return $this->attributes[$attribute_name] = $newFile->id;
+        $this->uploadFileToDisk($value, $attribute_name, $disk, $destination_path, $fileName);
     }
 }

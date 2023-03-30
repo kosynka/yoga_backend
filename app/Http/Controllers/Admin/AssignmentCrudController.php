@@ -38,6 +38,9 @@ class AssignmentCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        if (backpack_user()->id != 1) {
+            $this->crud->denyAccess(['create', 'update', 'delete']);
+        }
         $this->crud->setDefaultPageLength(50);
         $this->crud->orderBy('id');
 
@@ -48,12 +51,23 @@ class AssignmentCrudController extends CrudController
             'type' => 'select',
             'attribute' => 'name',
         ]);
-        $this->crud->addColumn([
-            'name' => 'lesson',
-            'label' => 'Урок',
-            'type' => 'select',
-            'attribute' => 'attributes',
-        ]);
+        if (backpack_user()->role == 'INSTRUCTOR') {
+            $this->crud->addColumn([
+                'name' => 'lesson',
+                'label' => 'Урок',
+                'type' => 'select',
+                'attribute' => 'instrutorAttributes',
+                'limit' => 1000,
+            ]);
+        } else {
+            $this->crud->addColumn([
+                'name' => 'lesson',
+                'label' => 'Урок',
+                'type' => 'select',
+                'attribute' => 'attributes',
+                'limit' => 1000,
+            ]);
+        }
     }
 
     /**

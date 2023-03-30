@@ -9,6 +9,7 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -46,6 +47,7 @@ class User extends Authenticatable //implements MustVerifyEmail
 
     protected $appends = [
         'onlyUsers',
+        'adminsFirst',
     ];
 
     public function isUser(): bool
@@ -66,6 +68,11 @@ class User extends Authenticatable //implements MustVerifyEmail
     public function favoriteAffiliate(): BelongsTo
     {
         return $this->belongsTo(Affiliate::class, 'favorite_affiliate_id');
+    }
+
+    public function masterOfAffiliate(): HasOne
+    {
+        return $this->hasOne(Affiliate::class, 'master_id', 'id');
     }
 
     public function assignments(): HasMany
@@ -130,6 +137,19 @@ class User extends Authenticatable //implements MustVerifyEmail
         return new Attribute(
             get: function () {
                 return $this->getRole() . ' | ' . $this->name . ' +7' . $this->phone;
+            },
+        );
+    }
+
+    public function adminsFirst(): Attribute
+    {
+        return new Attribute(
+            get: function () {
+                if ($this->role == self::ROLE_ADMIN) {
+                    return $this->getRole() . ' | ' . $this->name . ' +7' . $this->phone;
+                } else {
+                    return 'ne admin';
+                }
             },
         );
     }

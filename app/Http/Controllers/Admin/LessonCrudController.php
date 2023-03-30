@@ -30,6 +30,11 @@ class LessonCrudController extends CrudController
         $this->crud->setEntityNameStrings('Урок', 'Уроки');
     }
 
+    protected function checkPermission()
+    {
+        return backpack_user()->id != 1 && backpack_user()->role == 'ADMIN';
+    }
+
     /**
      * Define what happens when the List operation is loaded.
      * 
@@ -54,10 +59,18 @@ class LessonCrudController extends CrudController
             'type' => 'select',
             'attribute' => 'name',
         ]);
+        $this->crud->addColumn([
+            'name' => 'assignments',
+            'label' => 'Кол-во записей',
+            'type' => 'closure',
+            'function' => function($entry) {
+                return $entry->assignments()->count();
+            }
+        ]);
         $this->crud->addColumn(['name' => 'starts_at', 'label' => 'Начало занятия']);
         $this->crud->addColumn(['name' => 'continuance', 'label' => 'Минут']);
         $this->crud->addColumn(['name' => 'participants_limitation', 'label' => 'Ограничение кол-ва людей']);
-        $this->crud->addColumn(['name' => 'comment', 'label' => 'Комментарий']);
+        $this->crud->addColumn(['name' => 'comment', 'label' => 'Комментарий', 'limit' => 1000]);
     }
 
     /**
@@ -76,12 +89,24 @@ class LessonCrudController extends CrudController
             'type' => 'select',
             'attribute' => 'name',
         ]);
-        $this->crud->addField([
-            'name' => 'instructor',
-            'label' => 'Инструктор',
-            'type' => 'select',
-            'attribute' => 'onlyUsers',
-        ]);
+        if (backpack_user()->role == 'INSTRUCTOR') {
+            $this->crud->addField([
+                'name' => 'instructor',
+                'label' => 'Инструктор',
+                'type' => 'hidden',
+                'attributes' => [
+                    'readonly' => 'readonly',
+                ],
+                'default' => backpack_user()->id,
+            ]);
+        } else {
+            $this->crud->addField([
+                'name' => 'instructor',
+                'label' => 'Инструктор',
+                'type' => 'select',
+                'attribute' => 'onlyUsers',
+            ]);
+        }
         $this->crud->addField(['name' => 'starts_at', 'label' => 'Начало занятия']);
         $this->crud->addField(['name' => 'continuance', 'label' => 'Минут']);
         $this->crud->addField(['name' => 'participants_limitation', 'label' => 'Ограничение кол-ва людей']);

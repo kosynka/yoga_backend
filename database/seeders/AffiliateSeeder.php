@@ -21,18 +21,21 @@ class AffiliateSeeder extends Seeder
                 'phone' => '700 778 8990',
                 'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod sagittis nisi vel facilisis',
                 'city_id' => 1,
+                // 'master_id' => 8,
             ],
             [
                 'name' => 'VelVet',
                 'phone' => '700 778 8991',
                 'description' => 'Vestibulum placerat in urna id congue. Donec et scelerisque urna. Sed mattis pellentesque turpis',
                 'city_id' => 1,
+                // 'master_id' => 9,
             ],
             [
                 'name' => 'АэроЙога',
                 'phone' => '700 778 8992',
                 'description' => 'Quisque posuere suscipit malesuada. Morbi semper euismod venenatis. Vivamus fringilla lorem tempus, fermentum tortor vitae, tempor lacus',
                 'city_id' => 1,
+                // 'master_id' => 10,
             ],
         ];
 

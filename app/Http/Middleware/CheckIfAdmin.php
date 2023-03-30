@@ -26,9 +26,9 @@ class CheckIfAdmin
      * @param  \Illuminate\Contracts\Auth\Authenticatable|null  $user
      * @return bool
      */
-    private function checkIfUserIsAdmin($user)
+    private function checkUser($user)
     {
-        return ($user->role == User::ROLE_ADMIN);
+        return ($user->role == User::ROLE_ADMIN || $user->role == User::ROLE_INSTRUCTOR);
     }
 
     /**
@@ -59,7 +59,7 @@ class CheckIfAdmin
             return $this->respondToUnauthorizedRequest($request);
         }
 
-        if (! $this->checkIfUserIsAdmin(backpack_user())) {
+        if (! $this->checkUser(backpack_user())) {
             return $this->respondToUnauthorizedRequest($request);
         }
 

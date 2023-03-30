@@ -24,7 +24,7 @@ class AffiliateBanner extends Model
 
     public function affiliate(): BelongsTo
     {
-        return $this->belongsTo(Affiliate::class, 'affiliate_id', 'id');
+        return $this->belongsTo(Affiliate::class, 'affiliate_id');
     }
 
     public function setImageAttribute($value)

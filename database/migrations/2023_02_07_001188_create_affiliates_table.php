@@ -29,7 +29,7 @@ return new class extends Migration
 
             $table->unsignedBigInteger('master_id')->nullable();
 
-            $table->unsignedBigInteger('parent_id')->default(0);
+            // $table->unsignedBigInteger('parent_id')->default(0);
 
             $table->timestamps();
             $table->softDeletes();

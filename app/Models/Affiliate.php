@@ -22,6 +22,7 @@ class Affiliate extends Model
         'link',
         'image',
         'city_id',
+        'master_id',
     ];
 
     protected $hidden = [
@@ -42,7 +43,7 @@ class Affiliate extends Model
 
     public function master(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'master_id');
     }
 
     public function instructors(): HasMany

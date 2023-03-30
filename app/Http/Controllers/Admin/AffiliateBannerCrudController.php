@@ -30,6 +30,11 @@ class AffiliateBannerCrudController extends CrudController
         $this->crud->setEntityNameStrings('Баннер филиала', 'Баннеры филиалов');
     }
 
+    protected function checkPermission()
+    {
+        return backpack_user()->id != 1 && backpack_user()->role == 'ADMIN';
+    }
+
     /**
      * Define what happens when the List operation is loaded.
      * 
@@ -38,6 +43,9 @@ class AffiliateBannerCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        if ($this->checkPermission()) {
+            $this->crud->addClause('where', 'affiliate_id', '=', backpack_user()->masterOfAffiliate->id);
+        }
         $this->crud->setDefaultPageLength(50);
         $this->crud->orderBy('affiliate_id');
 
@@ -67,12 +75,24 @@ class AffiliateBannerCrudController extends CrudController
     {
         $this->crud->setValidation(AffiliateBannerRequest::class);
 
-        $this->crud->addField([
-            'name' => 'affiliate',
-            'label' => 'Филиал',
-            'type' => 'select',
-            'attribute' => 'name',
-        ]);
+        if ($this->checkPermission()) {
+            $this->crud->addField([
+                'name' => 'affiliate',
+                'label' => 'Филиал',
+                'type' => 'hidden',
+                'attributes' => [
+                    'readonly' => 'readonly',
+                ],
+                'default' => backpack_user()->masterOfAffiliate->id,
+            ]);
+        } else {
+            $this->crud->addField([
+                'name' => 'affiliate',
+                'label' => 'Филиал',
+                'type' => 'select',
+                'attribute' => 'name',
+            ]);
+        }
         $this->crud->addField([
             'name' => 'image',
             'label' => 'Изображение',

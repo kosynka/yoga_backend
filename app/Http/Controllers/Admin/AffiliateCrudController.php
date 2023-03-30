@@ -30,6 +30,11 @@ class AffiliateCrudController extends CrudController
         $this->crud->setEntityNameStrings('Филиал', 'Филиалы');
     }
 
+    protected function checkPermission()
+    {
+        return backpack_user()->id != 1 && backpack_user()->role == 'ADMIN';
+    }
+
     /**
      * Define what happens when the List operation is loaded.
      * 
@@ -38,12 +43,24 @@ class AffiliateCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        if ($this->checkPermission()) {
+            $this->crud->addClause('where', 'master_id', '=', backpack_user()->id);
+        }
+
         $this->crud->setDefaultPageLength(50);
         $this->crud->orderBy('id');
 
         $this->crud->addColumn('id');
         $this->crud->addColumn(['name' => 'name', 'label' => 'Название']);
         $this->crud->addColumn(['name' => 'phone', 'label' => 'Телефон']);
+        if (backpack_user()->id == 1) {
+            $this->crud->addColumn([
+                'name' => 'master',
+                'label' => 'Админ',
+                'type' => 'select',
+                'attribute' => 'name',
+            ]);
+        }
         $this->crud->addColumn(['name' => 'description', 'label' => 'Описание']);
         $this->crud->addColumn(['name' => 'link', 'label' => 'Ссылка']);
         $this->crud->addColumn(['name' => 'city', 'label' => 'Город']);
@@ -68,6 +85,17 @@ class AffiliateCrudController extends CrudController
 
         $this->crud->addField(['name' => 'name', 'label' => 'Название']);
         $this->crud->addField(['name' => 'phone', 'label' => 'Телефон']);
+        if (backpack_user()->id == 1) {
+            $this->crud->addField([
+                'name' => 'master',
+                'label' => 'Админ',
+                'type' => 'select',
+                'attribute' => 'adminsFirst',
+                'options' => (function ($query) {
+                    return $query->orderBy('role')->get();
+                })
+            ]);
+        }
         $this->crud->addField(['name' => 'description', 'label' => 'Описание']);
         $this->crud->addField(['name' => 'link', 'label' => 'Ссылка']);
         $this->crud->addField(['name' => 'city', 'label' => 'Город']);

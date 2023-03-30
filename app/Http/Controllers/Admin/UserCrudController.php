@@ -38,6 +38,9 @@ class UserCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        if (backpack_user()->id != 1) {
+            $this->crud->denyAccess(['create', 'update', 'delete']);
+        }
         $this->crud->setDefaultPageLength(50);
         $this->crud->orderBy('id');
 
@@ -53,14 +56,8 @@ class UserCrudController extends CrudController
             ],
         ]);
         $this->crud->addColumn(['name' => 'name', 'label' => 'Имя']);
-        $this->crud->addColumn(['name' => 'description', 'label' => 'Описание']);
+        $this->crud->addColumn(['name' => 'description', 'label' => 'Описание', 'limit' => 1000]);
         $this->crud->addColumn(['name' => 'phone', 'label' => 'Телефон']);
-        // $this->crud->addColumn([
-        //     'label' => 'Фото',
-        //     'name' => 'photo',
-        //     'type' => 'upload',
-        //     'upload' => true,
-        // ]);
         $this->crud->addColumn([
             'name' => 'favoriteAffiliate',
             'label' => 'Любимый филиал',
@@ -74,6 +71,14 @@ class UserCrudController extends CrudController
             'label' => 'Работает в филиале',
             'type' => 'select',
             'entity' => 'worksInAffiliate',
+            'model' => '\App\Models\Affiliate::class',
+            'attribute' => 'name',
+        ]);
+        $this->crud->addColumn([
+            'name' => 'masterOfAffiliate',
+            'label' => 'Админ в',
+            'type' => 'select',
+            'entity' => 'masterOfAffiliate',
             'model' => '\App\Models\Affiliate::class',
             'attribute' => 'name',
         ]);

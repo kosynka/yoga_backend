@@ -32,6 +32,8 @@ class Lesson extends Model
 
     protected $appends = [
         'attributes',
+        'instrutorAttributes',
+        'assignmentsAmount',
     ];
 
     public function type(): BelongsTo
@@ -64,7 +66,14 @@ class Lesson extends Model
     public function attributes(): Attribute
     {
         return new Attribute(
-            get: fn () => $this->type->name . ' ' . $this->instructor->name . ' ' . $this->starts_at,
+            get: fn () => $this->starts_at . ' | ' . $this->instructor->name . ' | ' . $this->type->name,
+        );
+    }
+
+    public function instrutorAttributes(): Attribute
+    {
+        return new Attribute(
+            get: fn () => $this->starts_at . ' | ' . $this->type->name,
         );
     }
 }

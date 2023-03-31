@@ -4,7 +4,7 @@ namespace App\Services\Contracts;
 
 interface AuthServiceInterface
 {
-	public function login(string $phone);
+	public function login(array $data);
 
 	public function register(array $data);
 

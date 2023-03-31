@@ -21,7 +21,7 @@ class AuthController extends ApiController
     {
         $data = $request->validated();
 
-        return $this->result($this->service->login($data['phone']));
+        return $this->result($this->service->login($data));
     }
 
     public function register(RegisterRequest $request)

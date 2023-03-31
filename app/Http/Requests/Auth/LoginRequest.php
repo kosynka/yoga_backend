@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Enums\UserRole;
 use App\Rules\Phone;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Enum;
 
 class LoginRequest extends FormRequest
 {
@@ -26,6 +28,7 @@ class LoginRequest extends FormRequest
     {
         return [
             'phone' => ['required', new Phone],
+            'role' => ['nullable', 'string', new Enum(UserRole::class)],
         ];
     }
 }

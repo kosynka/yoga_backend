@@ -61,8 +61,6 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
 
     public function store(array $attributes): Model
     {
-        $attributes['role'] = User::ROLE_USER;
-
         return $this->model->create($attributes);
     }
 

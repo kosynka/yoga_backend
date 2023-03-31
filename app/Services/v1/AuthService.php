@@ -18,15 +18,15 @@ class AuthService extends BaseService implements AuthServiceInterface
         $this->repository = $repository;
     }
 
-    public function login(string $phone)
+    public function login(array $data)
     {
-        $user = $this->repository->findByPhone($phone);
+        $user = $this->repository->findByPhone($data['phone']);
 
         if (!isset($user)) {
-            $this->storeNewUser($phone);
+            $this->storeNewUser($data);
         }
 
-        SmsSendJob::dispatch($phone);
+        SmsSendJob::dispatch($data['phone']);
 
         return $this->ok('На ваш телефон отправлен код авторизации');
     }
@@ -86,12 +86,21 @@ class AuthService extends BaseService implements AuthServiceInterface
         return $this->ok();
     }
 
-    private function storeNewUser(string $phone): void
+    private function storeNewUser(array $data): void
     {
-        $data = array(
-            'phone' => $phone,
-            'name' => 'user ' . uniqid(),
-        );
+        if (isset($data['role'])) {
+            $data = array(
+                'phone' => $data['phone'],
+                'role' => $data['role'],
+                'name' => strtolower($data['role']) . uniqid(),
+            );
+        } else {
+            $data = array(
+                'phone' => $data['phone'],
+                'role' => 'USER',
+                'name' => 'user' . uniqid(),
+            );
+        }
 
         $this->repository->store($data);
     }

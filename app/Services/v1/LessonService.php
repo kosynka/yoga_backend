@@ -27,7 +27,7 @@ class LessonService extends BaseService implements LessonServiceInterface
         $lessons = $this->repository->all($data);
 
         return $this->result([
-            'lesson' => LessonResource::collection($lessons->load('instructor')),
+            'lesson' => LessonResource::collection($lessons->load('instructor', 'assignments')),
         ]);
     }
 
@@ -47,7 +47,7 @@ class LessonService extends BaseService implements LessonServiceInterface
         $lesson = $this->repository->find($id);
 
         return $this->result([
-            'lesson' => (new LessonResource($lesson->load('instructor'))),
+            'lesson' => (new LessonResource($lesson->load('instructor', 'assignments'))),
         ]);
     }
 

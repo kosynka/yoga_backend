@@ -7,6 +7,7 @@ use App\Repositories\Contracts\AssignmentRepositoryInterface;
 use App\Repositories\Contracts\CityRepositoryInterface;
 use App\Repositories\Contracts\FileRepositoryInterface;
 use App\Repositories\Contracts\LessonRepositoryInterface;
+use App\Repositories\Contracts\PackageRepositoryInterface;
 use App\Repositories\Contracts\TypeRepositoryInterface;
 use App\Repositories\Contracts\UserRepositoryInterface;
 use App\Repositories\v1\AffiliateRepository;
@@ -14,6 +15,7 @@ use App\Repositories\v1\AssignmentRepository;
 use App\Repositories\v1\CityRepository;
 use App\Repositories\v1\FileRepository;
 use App\Repositories\v1\LessonRepository;
+use App\Repositories\v1\PackageRepository;
 use App\Repositories\v1\TypeRepository;
 use App\Repositories\v1\UserRepository;
 use Illuminate\Support\ServiceProvider;
@@ -34,5 +36,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(AssignmentRepositoryInterface::class, AssignmentRepository::class);
         $this->app->bind(FileRepositoryInterface::class, FileRepository::class);
         $this->app->bind(CityRepositoryInterface::class, CityRepository::class);
+        $this->app->bind(PackageRepositoryInterface::class, PackageRepository::class);
     }
 }

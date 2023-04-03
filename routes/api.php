@@ -6,11 +6,13 @@ use App\Http\Controllers\Api\v1\AffiliateController;
 use App\Http\Controllers\Api\v1\AuthController;
 use App\Http\Controllers\Api\v1\SupportController;
 use App\Http\Controllers\Api\v1\LessonController;
+use App\Http\Controllers\Api\v1\PackageController;
+use App\Http\Controllers\Api\v1\PaymentController;
 use App\Http\Controllers\Api\v1\TypeController;
 use App\Http\Controllers\Api\v1\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::group(['prefix' => 'v1', 'middleware' => ['log']], function () {
+Route::group(['prefix' => 'v1'], function () {
     Route::get('cities', [DictionaryController::class, 'cities']);
 
     Route::post('/feedback', [SupportController::class, 'send']);
@@ -24,6 +26,15 @@ Route::group(['prefix' => 'v1', 'middleware' => ['log']], function () {
     });
 
     Route::group(['middleware' => ['auth:api-user']], function() {
+        Route::group(['prefix' => 'packages', 'controller' => PackageController::class], function () {
+            Route::get('/', 'index')->withoutMiddleware('auth:api-user');
+        });
+
+        Route::group(['prefix' => 'payments', 'controller' => PaymentController::class], function () {
+            Route::get('/{id}', 'check');
+            Route::post('/pay', 'init');
+        });
+
         Route::group(['prefix' => 'users', 'controller' => UserController::class], function () {
             Route::get('/', 'index')->withoutMiddleware('auth:api-user');
             Route::post('/', 'update');
@@ -38,7 +49,6 @@ Route::group(['prefix' => 'v1', 'middleware' => ['log']], function () {
             Route::get('/my', 'showFavorite')->middleware('check.role:user');
             Route::get('/{id}', 'show')->withoutMiddleware('auth:api-user');
             Route::put('/{id}/favorite', 'like')->middleware('check.role:user');
-
         });
 
         Route::apiResource('types', TypeController::class)->only([

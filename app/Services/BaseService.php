@@ -23,15 +23,16 @@ class BaseService
         }
     }
 
-    protected function errValidate($message): array
+    protected function errPaymentRequired($message): array
     {
-        return $this->error(422, $message);
+        return $this->error(402, $message);
     }
 
-    protected function errFobidden($message): array
+    protected function errForbidden($message): array
     {
         return $this->error(403, $message);
     }
+
     protected function errNotFound($message): array
     {
         return $this->error(404, $message);
@@ -41,6 +42,7 @@ class BaseService
     {
         return $this->error(500, $message);
     }
+
     protected function errNotAcceptable($message): array
     {
         return $this->error(406, $message);
@@ -79,21 +81,6 @@ class BaseService
             ],
             'httpCode' => $code
         ];
-    }
-
-    protected function response(int $code, array $data): array
-    {
-        $this->writeLog($this->getInfoContext($code, $data));
-
-        return [
-            'data' => $data,
-            'httpCode' => $code
-        ];
-    }
-
-    protected function isSuccess(array $result): bool
-    {
-        return (!empty($result['httpCode']) && $result['httpCode'] === 200);
     }
 
     private function getInfoContext($data)

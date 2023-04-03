@@ -58,7 +58,7 @@ class LessonService extends BaseService implements LessonServiceInterface
         if ($this->user->id === $lesson->instructor_id) {
             $lesson = $this->repository->update($id, $data);
         } else {
-            return $this->errFobidden('Вы не можете изменить этот урок');
+            return $this->errForbidden('Вы не можете изменить этот урок');
         }
 
 
@@ -76,7 +76,7 @@ class LessonService extends BaseService implements LessonServiceInterface
 
             return $this->ok('Ваш урок удален');
         } else {
-            return $this->errFobidden('Вы не можете удалить этот урок');
+            return $this->errForbidden('Вы не можете удалить этот урок');
         }
     }
 }

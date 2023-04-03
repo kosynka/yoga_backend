@@ -46,6 +46,8 @@ class AssignmentService extends BaseService implements AssignmentServiceInterfac
             return $this->ok('Свободных мест не осталось');
         }
 
+        // $this->user->
+
         $assignment = $this->repository->store($data);
 
         return $this->result([
@@ -69,7 +71,7 @@ class AssignmentService extends BaseService implements AssignmentServiceInterfac
         if ($this->user->id === $assignment->user_id) {
             $assignment = $this->repository->update($id, $data);
         } else {
-            return $this->errFobidden('Вы не можете изменить эту запись');
+            return $this->errForbidden('Вы не можете изменить эту запись');
         }
 
         return $this->result([
@@ -86,7 +88,7 @@ class AssignmentService extends BaseService implements AssignmentServiceInterfac
 
             return $this->ok('Ваша запись удалена');
         } else {
-            return $this->errFobidden('Вы не можете удалить эту запись');
+            return $this->errForbidden('Вы не можете удалить эту запись');
         }
     }
 

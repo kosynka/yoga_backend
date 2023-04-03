@@ -24,7 +24,7 @@ class AuthService extends BaseService implements AuthServiceInterface
 
         if (! isset($user)) {               // if user not found
             if (isset($data['role'])) {     // and if user role is not set (as INSTRUCTOR)
-                return $this->errFobidden('Тренера с таким номером не существует');
+                return $this->errForbidden('Тренера с таким номером не существует');
             } else {
                 $this->storeNewUser($data);
             }
@@ -55,7 +55,7 @@ class AuthService extends BaseService implements AuthServiceInterface
         $user = $this->repository->findByPhone($phone);
 
         if (!isset($user)) {
-			return $this->errFobidden('Пользователя с таким номером телефона не существует');
+			return $this->errForbidden('Пользователя с таким номером телефона не существует');
         }
 
 		SmsSendJob::dispatch($phone);
@@ -68,7 +68,7 @@ class AuthService extends BaseService implements AuthServiceInterface
         $user = $this->repository->findByPhone($data['phone']);
 
 		if (!isset($user)) {
-			return $this->errFobidden('Пользователя с таким номером телефона не существует');
+			return $this->errForbidden('Пользователя с таким номером телефона не существует');
         }
 
 		if (!Sms::check($data['phone'], $data['code'])) {

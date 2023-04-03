@@ -46,7 +46,7 @@ class AssignmentService extends BaseService implements AssignmentServiceInterfac
             return $this->ok('Свободных мест не осталось');
         }
 
-        // $this->user->
+        $this->reduceNumOfVisits(1);
 
         $assignment = $this->repository->store($data);
 
@@ -95,5 +95,13 @@ class AssignmentService extends BaseService implements AssignmentServiceInterfac
     private function isParticipantsLimitEndedUp(int $lessonId): bool
     {
         return $this->lessonRepository->isParticipantsLimitEndedUp($lessonId);
+    }
+
+    private function reduceNumOfVisits(int $amount = 1): void
+    {
+        $visitsLeft = $this->user->visits_left - $amount;
+
+        $this->user->visits_left = $visitsLeft;
+        $this->user->save();
     }
 }

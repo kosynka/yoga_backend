@@ -31,12 +31,15 @@ class User extends Authenticatable //implements MustVerifyEmail
         'phone',
         'description',
         'photo_id',
+        'package_id',
         'favorite_affiliate_id',
         'works_in_affiliate_id',
         'created_at',
+        'expires_at',
+        'visits_left',
         'fb_token',
     ];
-    
+
     protected $hidden = [
         'password',
         'phone_verified_at',
@@ -63,6 +66,11 @@ class User extends Authenticatable //implements MustVerifyEmail
     public function photo(): BelongsTo
     {
         return $this->belongsTo(File::class, 'photo_id');
+    }
+
+    public function package(): BelongsTo
+    {
+        return $this->belongsTo(Package::class, 'package_id');
     }
 
     public function favoriteAffiliate(): BelongsTo

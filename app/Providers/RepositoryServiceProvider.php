@@ -30,6 +30,7 @@ class RepositoryServiceProvider extends ServiceProvider
     public function register()
     { 
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+        $this->app->bind(DeleteUsersExpiredPackageJobInterface::class, UserRepository::class);
         $this->app->bind(AffiliateRepositoryInterface::class, AffiliateRepository::class);
         $this->app->bind(TypeRepositoryInterface::class, TypeRepository::class);
         $this->app->bind(LessonRepositoryInterface::class, LessonRepository::class);

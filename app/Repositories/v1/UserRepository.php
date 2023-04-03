@@ -15,6 +15,11 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         parent::__construct($model);
     }
 
+    public function getAll(): ?Collection
+    {
+        return $this->model->all();
+    }
+
     public function all(array $attributes): ?Collection
     {
         $query = $this->filter($attributes);
@@ -70,6 +75,11 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         $model->save();
 
         return $model;
+    }
+
+    public function updateAll(array $ids, array $data): void
+    {
+        $this->model->whereIn('id', $ids)->update($data);
     }
 
     public function destroy($model): void

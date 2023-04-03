@@ -33,6 +33,11 @@ return new class extends Migration
                 ->constrained('files')
                 ->cascadeOnUpdate();
 
+            $table->foreignId('package_id')
+                ->nullable()
+                ->constrained('packages')
+                ->cascadeOnUpdate();
+
             $table->foreignId('favorite_affiliate_id')
                 ->nullable()
                 ->constrained('affiliates')
@@ -43,11 +48,10 @@ return new class extends Migration
                 ->constrained('affiliates')
                 ->cascadeOnUpdate();
 
+            $table->timestamp('expires_at')->nullable();
+            $table->integer('visits_left')->nullable();
             $table->string('password')->nullable();
-
             $table->string('fb_token')->nullable();
-            $table->timestamp('email_verified_at')->nullable();
-            // $table->timestamp('phone_verified_at')->nullable();
 
             $table->rememberToken();
             $table->timestamps();

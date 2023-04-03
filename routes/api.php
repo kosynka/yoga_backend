@@ -57,7 +57,7 @@ Route::group(['prefix' => 'v1'], function () {
 
         Route::group(['prefix' => 'assignments', 'controller' => AssignmentController::class], function () {
             Route::get('/', 'index');
-            Route::post('/', 'store')->middleware('check.role:user');
+            Route::post('/', 'store')->middleware(['check.role:user', 'has.visits.amount.left:1']);
             Route::get('/{id}', 'show');
             Route::put('/{id}', 'update')->middleware('check.role:user');
             Route::delete('/{id}', 'destroy')->middleware('check.role:user');

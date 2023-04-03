@@ -41,7 +41,7 @@ Route::group(['prefix' => 'v1', 'middleware' => ['log']], function () {
 
         });
 
-        Route::resource('types', TypeController::class)->only([
+        Route::apiResource('types', TypeController::class)->only([
             'index', 'show'
         ])->withoutMiddleware('auth:api-user');
 

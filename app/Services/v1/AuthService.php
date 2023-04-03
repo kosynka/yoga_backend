@@ -22,8 +22,12 @@ class AuthService extends BaseService implements AuthServiceInterface
     {
         $user = $this->repository->findByPhone($data['phone']);
 
-        if (!isset($user)) {
-            $this->storeNewUser($data);
+        if (! isset($user)) {               // if user not found
+            if (isset($data['role'])) {     // and if user role is not set (as INSTRUCTOR)
+                return $this->errFobidden('Тренера с таким номером не существует');
+            } else {
+                $this->storeNewUser($data);
+            }
         }
 
         SmsSendJob::dispatch($data['phone']);
@@ -88,19 +92,11 @@ class AuthService extends BaseService implements AuthServiceInterface
 
     private function storeNewUser(array $data): void
     {
-        if (isset($data['role'])) {
-            $data = array(
-                'phone' => $data['phone'],
-                'role' => $data['role'],
-                'name' => strtolower($data['role']) . uniqid(),
-            );
-        } else {
-            $data = array(
-                'phone' => $data['phone'],
-                'role' => 'USER',
-                'name' => 'user' . uniqid(),
-            );
-        }
+        $data = array(
+            'phone' => $data['phone'],
+            'role' => 'USER',
+            'name' => 'user' . uniqid(),
+        );
 
         $this->repository->store($data);
     }

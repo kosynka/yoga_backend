@@ -16,9 +16,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->job(new DeleteUsersExpiredPackageJob())
-            ->everyMinute();
-            // ->daily();
+        $schedule->job(new DeleteUsersExpiredPackageJob())->daily();
     }
 
     /**

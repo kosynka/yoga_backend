@@ -15,11 +15,6 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         parent::__construct($model);
     }
 
-    public function getAll(): ?Collection
-    {
-        return $this->model->all();
-    }
-
     public function all(array $attributes): ?Collection
     {
         $query = $this->filter($attributes);

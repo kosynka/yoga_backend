@@ -3,7 +3,7 @@
 namespace App\Jobs;
 
 use App\Events\UserPackageExpired;
-use App\Repositories\Contracts\DeleteUsersExpiredPackageJobInterface;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -15,26 +15,9 @@ class DeleteUsersExpiredPackageJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private DeleteUsersExpiredPackageJobInterface $repository;
-
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
-    public function __construct(DeleteUsersExpiredPackageJobInterface $repository)
-    {
-        $this->repository = $repository;
-    }
-
-    /**
-     * Execute the job.
-     *
-     * @return void
-     */
     public function handle()
     {
-        $users = $this->repository->getAll();
+        $users = User::where('role', User::ROLE_USER)->get();
         $now = date("Y-m-d");
         $userIds = array();
 
@@ -46,7 +29,7 @@ class DeleteUsersExpiredPackageJob implements ShouldQueue
 
                 UserPackageExpired::dispatch($user);
 
-                Log::info('User #' . $user->id . ' package has been expired at date: ' . $now);
+                Log::info('User #' . $user->id . ' package has been expired at ' . $now);
             }
         }
 
@@ -56,6 +39,6 @@ class DeleteUsersExpiredPackageJob implements ShouldQueue
             'visits_left' => null,
         ];
 
-        $this->repository->updateAll($userIds, $data);
+        User::whereIn('id', $userIds)->update($data);
     }
 }

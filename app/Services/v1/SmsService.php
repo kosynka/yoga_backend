@@ -22,12 +22,10 @@ class SmsService
         $this->insertRecord($phone, $code);
         $data = $this->prepareData($phone, $code);
 
-        $response = 'ТУТ СТОИТ ЗАТЫЧКА';
-
-        // $response = Http::get(
-        //     $this->config['url'],
-        //     $data
-        // );
+        $response = Http::get( // отправка сообщения
+            $this->config['url'],
+            $data
+        );
 
         Log::info(__METHOD__ . '. Верификация phone:' . $this->preparedPhone($phone) . '; код:' . $code . ' ответ:' . $response);   // поставь это $response->body() вместо этого $response
     }
@@ -40,9 +38,9 @@ class SmsService
                 ['code', $code],
             ])->first();
 
-        // if (is_null($token)) {
-        //     return false;
-        // }
+        if (is_null($token)) {
+            return false;
+        }
 
         DB::table('verify_phone_token')
             ->where([
